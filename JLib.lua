@@ -8,7 +8,7 @@ function init()
 end
 
 function findIntersect(L1,L2)
-
+--WIP*
 --FIX THIS.
 	L1.x1 = L1[1][1]
 	L1.y1 = L1[1][2]
@@ -30,25 +30,19 @@ end
 
 function findSlope(p1,p2)
 
---FIX THIS.
-	p1.x=p1[1]
-	p1.y=p1[2]
-	p2.x=p2[1]
-	p2.y=p2[2]
-	
 	--check if points are the same
-	if (p1.x==p2.x and p1.y==p2.y) then
+	if (p1[1]==p2[1] and p1[2]==p2[2]) then
 	
 		return 0
 	
 	--check if line is vertical
-	elseif (p1.x == p2.x) then
+	elseif (p1[1] == p2[1]) then
 	
 		return "inf"
 	
 	else
 	
-		return (p2.y-p1.y)/(p2.x-p1.x)
+		return (p2[2]-p1[2])/(p2[1]-p1[1])
 	
 	end
 	
@@ -59,20 +53,12 @@ end
 --p1=alpha/a, p2=gamma/c, p3=beta/b
 function findAngle(p1,p2,p3)
 
---FIX THIS.
-	p1.x=p1[1]
-	p1.y=p1[2]
-	p2.x=p2[1]
-	p2.y=p2[2]
-	p3.x=p3[1]
-	p3.y=p3[2]
-	
 	a = dist(p2,p3)
 	b = dist(p1,p2)
 	c = dist(p1,p3)
 	
 	--check for case where p1 is the same as p2
-	if (p1.x==p2.x and p1.y==p2.y) then
+	if (p1[1]==p2[1] and p1[2]==p2[2]) then
 	
 		gamma = 0
 		
