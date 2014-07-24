@@ -93,6 +93,8 @@ function dist(p1,p2)
 end
 
 function mergeTables(...)
+	local arg = {...}
+
 	merged = {}
 	
 	for i=1, #arg do
@@ -118,7 +120,8 @@ function printTable(t)
 end
 
 function pointLine(...)
-
+	local arg = {...}
+	
 	lineTable = {}
 	
 	for i=1, #arg do
@@ -131,7 +134,8 @@ end
 
 --arg[1] is type, rest are vertices
 function pointPolygon(...)
-
+	local arg = {...}
+	
 	polyTable = {}
 	
 	for i=2, #arg do
@@ -167,14 +171,20 @@ end
 --takes tables of points
 --arg[1] is point in question, rest are possible points
 function findClosestPoint(...)
+	local arg = {...}
 	
 	p = {}
 	p[1] = arg[1][1]
 	p[2] = arg[1][2]
+	
+	printTable(t1)
+	printTable(t2)
+	printTable(t3)
 
 	--start by assuming first in points list (arg[2]) is closest
 	closest = {arg[2][1], arg[2][2]}
 	
+
 	
 	closestDist = dist(p,arg[2])
 

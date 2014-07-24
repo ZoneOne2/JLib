@@ -51,11 +51,11 @@ function love.update(dt)
 	
 	mx = love.mouse.getX()-(window.width/2)
 	my = -love.mouse.getY()+(window.height/2)
-	
-	
+
 	t1 = {mx,my}
 	t2 = {97,5}
 	t3 = {26,31}
+	
 	
 
 	test = findClosestPoint(t1,t2,t3)
