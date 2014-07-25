@@ -159,39 +159,38 @@ end
 function findClosestPoint(...)
 	local arg = {...}
 	
-	p = {}
-	p[1] = arg[1][1]
-	p[2] = arg[1][2]
-	
-	printTable(t1)
-	printTable(t2)
-	printTable(t3)
+	if #arg >=3 then
+		--p = {}
+		--p[1] = arg[1][1]
+		--p[2] = arg[1][2]
+		
 
-	--start by assuming first in points list (arg[2]) is closest
-	closest = {arg[2][1], arg[2][2]}
-	
+		--start by assuming first in points list (arg[2]) is closest
+		closest = {arg[2][1], arg[2][2]}
+		
 
-	
-	closestDist = dist(p,arg[2])
+		
+		closestDist = dist(arg[1],arg[2])
 
 
-	
-	--next check 3 through...
-	for i=3, #arg do
-	
-		if (dist(p,arg[i]) < closestDist) then
-			closest = {arg[i][1], arg[i][2]}
-			closestDist = dist(p,arg[i])
+		
+		--next check 3 through...
+		for i=3, #arg do
+		
+			if (dist(arg[1],arg[i]) < closestDist) then
+				closest = {arg[i][1], arg[i][2]}
+				closestDist = dist(arg[1],arg[i])
+			end
+		
 		end
-	
+		
+		return closest
+	else
+		--return point in question if no other points exist
+		return {arg[1]}
 	end
-	
-	return closest
 
 end
-
-
-
 
 function pause()
 
@@ -201,3 +200,43 @@ function pause()
 	while(true)do end
 	
 end
+
+function drawGrid(scale)
+
+	lg.setColor(200,200,200)
+	lg.setLineWidth(1)
+	
+	--right
+	for i=0, window.width/2, scale do
+		lg.line(i,window.height/2,i,-window.height/2)
+	end
+	
+	--left, start at -scale since 0 was already done in right
+	for i=-scale, -window.width/2, -scale do
+		lg.line(i,window.height/2,i,-window.height/2)
+	end
+	
+	--top
+	for i=0, window.height/2, scale do
+		lg.line(window.width/2,i,-window.width/2,i)
+	end
+	
+	--bottom, start at -scale since 0 was already done in top
+	for i=-scale, -window.height/2, -scale do
+		lg.line(window.width/2,i,-window.width/2,i)
+	end
+	
+end
+
+
+function setColorFind(seeking)
+
+	lg.setColor(colorFind.R[seeking],colorFind.G[seeking],colorFind.B[seeking])
+
+end
+
+
+
+
+
+
