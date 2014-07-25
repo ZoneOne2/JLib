@@ -76,6 +76,10 @@ function love.draw()
 			end
 			
 		end
+		
+		if (#t.polygon>2) then
+			pointPolygon("line",t.polygon)
+		end
 	
 	
 	lg.pop()
@@ -84,22 +88,20 @@ end
 
 function love.update(dt)
 	
-	mx = love.mouse.getX()-(window.width/2)
-	my = -love.mouse.getY()+(window.height/2)
+	jupdate(dt)
 	
 	allPoints = mergeTables(t.polygon,t.angle,t.center)
 
-	t1 = {mx,my}
-	t2 = {97,5}
-	t3 = {26,31}
+	t1 = {}
+	t1[1] = {mx,my}
+	t2 = {}
+	t2[1] = {97,5}
+	t3 = {}
+	t3[1] = {26,31}
 	
-	
-
-	--test = findClosestPoint(t1,t2,t3)
-
-	print(pointTypes[activePointType],findClosestPoint(t1,allPoints))
-	
-	--pause()
+	if (#t.polygon>2)then
+		print(fps,pointTypes[activePointType],isInside(t1[1],t.polygon))
+	end
 	
 end
 
@@ -120,6 +122,12 @@ function love.mousepressed( x, y, button )
 	if button == "l" then
 	
 		table.insert(t[pointTypes[activePointType]],{mx, my})
+	
+	end
+	
+	if button == "r" then
+		forRemove = findClosestPoint({mx,my},t.polygon,t.angle,t.center)
+		table.remove(forRemove[1],forRemove[2])
 	
 	end
 

@@ -7,6 +7,12 @@ function init()
 	window.height = lg.getHeight()
 end
 
+function jupdate(dt)
+	fps = math.floor(1/dt)
+	mx = love.mouse.getX()-(window.width/2)
+	my = -love.mouse.getY()+(window.height/2)
+end
+
 function findIntersect(L1,L2)
 --WIP*
 --FIX THIS.
@@ -110,8 +116,10 @@ function pointLine(...)
 	
 	lineTable = {}
 	
-	for i=1, #arg do
-		lineTable = mergeTables(lineTable,arg[i])
+	for i, tab in pairs(arg) do
+		for j, point in pairs(tab) do
+			lineTable = mergeTables(lineTable,point)
+		end
 	end
 	
 	lg.line(lineTable)
@@ -119,16 +127,18 @@ function pointLine(...)
 end
 
 --arg[1] is type, rest are vertices
-function pointPolygon(...)
+function pointPolygon(polyType,...)
 	local arg = {...}
 	
 	polyTable = {}
 	
-	for i=2, #arg do
-		polyTable = mergeTables(polyTable,arg[i])
+	for i, tab in pairs(arg) do
+		for j, point in pairs(tab) do
+			polyTable = mergeTables(polyTable,point)
+		end
 	end
 	
-	lg.polygon(arg[1],polyTable)
+	lg.polygon(polyType,polyTable)
 
 end
 
@@ -155,40 +165,29 @@ function advCirc(var, dist, limit)
 end
 
 --takes tables of points
---arg[1] is point in question, rest are possible points
-function findClosestPoint(...)
+--refPoint is point in question, rest of args are tables containing possible points
+--returns[1] table from passed args that contains closest point
+--returns[2] element from table in returns[1] that is the closet point
+function findClosestPoint(refPoint,...)
 	local arg = {...}
 	
-	if #arg >=3 then
-		--p = {}
-		--p[1] = arg[1][1]
-		--p[2] = arg[1][2]
-		
-
-		--start by assuming first in points list (arg[2]) is closest
-		closest = {arg[2][1], arg[2][2]}
-		
-
-		
-		closestDist = dist(arg[1],arg[2])
-
-
-		
-		--next check 3 through...
-		for i=3, #arg do
-		
-			if (dist(arg[1],arg[i]) < closestDist) then
-				closest = {arg[i][1], arg[i][2]}
-				closestDist = dist(arg[1],arg[i])
+	--closest = {arg[1][1][1], arg[1][1][2]}
+	closestDist = dist(refPoint,arg[1][1])
+	closestArg = 1
+	closestTab = 1
+	
+	for i, tab in pairs(arg) do
+		for j, point in pairs(tab) do
+			if (dist(refPoint,point)<closestDist) then
+				--closest = {point[1], point[2]}
+				closestDist = dist(refPoint,point)
+				closestArg = i
+				closestTab = j
 			end
-		
 		end
-		
-		return closest
-	else
-		--return point in question if no other points exist
-		return {arg[1]}
 	end
+	
+	return {arg[closestArg],closestTab}
 
 end
 
@@ -235,8 +234,35 @@ function setColorFind(seeking)
 
 end
 
+--refPoint is point in question, poly is table containing points representing polygon that point is/is not inside
+function isInside(refPoint,poly)
 
+	sumAngles = 0
+	
+	for i, point in pairs(poly) do
+		
+		--add angles made from (point-refPoint-nextPoint) for each point
+		
+		--nextPoint for lastpoint (poly[#poly]) is firstpoint (poly[1])
+		if (i == #poly) then
+			sumAngles = sumAngles + findAngle(point,refPoint,poly[1])
+		else
+			sumAngles = sumAngles + findAngle(point,refPoint,poly[i+1])
+		end
 
+	end
+	
+	--tolerance for %error here:
+	if (percentError(2*math.pi,sumAngles)<1e-5) then
+		return true
+	else
+		return false
+	end
 
+end
 
+function percentError(expected,obtained)
 
+	return (math.abs(expected-obtained)/(expected))*100
+
+end
