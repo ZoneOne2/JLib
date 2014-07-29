@@ -80,6 +80,9 @@ function love.draw()
 		if (#t.polygon>2) then
 			pointPolygon("line",t.polygon)
 		end
+		
+		
+		drawButtons()
 	
 	
 	lg.pop()
@@ -99,9 +102,10 @@ function love.update(dt)
 	t3 = {}
 	t3[1] = {26,31}
 	
-	if (#t.polygon>2)then
-		print(fps,pointTypes[activePointType],isInside(t1[1],t.polygon))
-	end
+
+	print(fps,pointTypes[activePointType],mx,my,buttons[1].y)
+
+	
 	
 end
 

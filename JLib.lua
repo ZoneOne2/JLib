@@ -5,6 +5,10 @@ function init()
 	window = {}
 	window.width = lg.getWidth()
 	window.height = lg.getHeight()
+	
+	nameColors()
+	
+	setButtons()
 end
 
 function jupdate(dt)
@@ -265,4 +269,159 @@ function percentError(expected,obtained)
 
 	return (math.abs(expected-obtained)/(expected))*100
 
+end
+
+function setButtons()
+
+	buttons = {}
+	
+	--shape: rectangle, circle, or polygon
+		--rectangle:
+			--x: top-left corner x-coordinate
+			--y: top-left corner y-coordinate
+			--width: button width
+			--height: button height
+		--circle:
+			--x: center x-coordinate
+			--y: center y-coordinate
+			--width: button radius
+		--polygon:
+			--p: table containing points
+				--p[1]: x
+				--p[2]: y
+	--color: color of button
+	--image: image of button (if one exists)
+	--text: text to display on button
+	--mouseOver: true/false for mouseover text
+	--mouseOverText: text to display on mouseover if mouse-over is true
+	--action: function to execute upon click
+	
+	createButton("Test Button R",nil,"rectangle",17,18,100,50)
+	buttons[#buttons].color = lime
+	
+	createButton("Test Button C",nil,"circle",8,8,7)
+	buttons[#buttons].color = cerulean
+	
+
+end
+
+function createButton(text,action,shape,...)
+	local arg = {...}
+	
+	buttons[#buttons+1] = {}
+	buttons[#buttons].shape = shape
+	buttons[#buttons].text = text
+	buttons[#buttons].action = action
+	
+	buttons[#buttons].color = "000000"
+	buttons[#buttons].mouseOver = false
+	buttons[#buttons].mouseOverText = text
+	
+	if (shape == "polygon") then
+		buttons[#buttons].p = arg[1]
+	elseif (shape == "rectangle") then
+		buttons[#buttons].x = arg[1]
+		buttons[#buttons].y = arg[2]
+		buttons[#buttons].width = arg[3]
+		buttons[#buttons].height = arg[4]
+	elseif (shape == "circle") then
+		buttons[#buttons].x = arg[1]
+		buttons[#buttons].y = arg[2]
+		buttons[#buttons].radius = arg[3]
+	end
+	
+
+end
+
+function drawButtons()
+--TODO: *Add text to buttons and optimize placement
+--		*look for image and draw over if it exists
+--		*Outline for buttons
+	for i, button in pairs(buttons) do
+
+		local RGB = HEXtoRGB(button.color)
+		lg.setColor(RGB[1],RGB[2],RGB[3])
+		
+		if (button.shape == "rectangle") then
+			lg.rectangle("fill",button.x,button.y,button.width,button.height)
+		elseif (button.shape == "circle") then
+			lg.circle("fill",button.x,button.y,button.radius)
+		elseif (button.shape == "polygon") then
+			pointPolygon("fill",button.p)
+		end
+	
+	
+	end
+
+end
+
+function RGBtoHEX(R, G, B)
+
+	return DECtoHEX(R)..DECtoHEX(G)..DECtoHEX(B)
+
+end
+
+function HEXtoRGB(hex)
+	
+	return { HEXtoDEC(string.sub(hex,1,2)), HEXtoDEC(string.sub(hex,3,4)), HEXtoDEC(string.sub(hex,5,6)) }
+	
+end
+
+function DECtoHEX(DecNum)
+	
+	alphaNumeric = "0123456789abcdef"
+	
+	majorNum = 0
+	minorNum = 0
+	
+	while (DecNum>=16) do
+		DecNum = DecNum - 16
+		majorNum = majorNum + 1
+	end
+	
+	minorNum = (DecNum % 16)
+	
+	return string.sub(alphaNumeric,(majorNum+1),(majorNum+1))..string.sub(alphaNumeric,(minorNum+1),(minorNum+1))
+	
+end
+
+--converts 2 digit hexadecimal string to decimal integer
+function HEXtoDEC(HexNum)
+
+	alphaNumeric = "0123456789abcdef"
+	
+	majorNum = string.sub(HexNum, 1, 1)
+	minorNum = string.sub(HexNum, 2, 2)
+	
+	for i=1, #alphaNumeric, 1 do
+	
+		if (majorNum == string.sub(alphaNumeric, i, i)) then
+			majorNum = i-1
+		end
+		
+		if (minorNum == string.sub(alphaNumeric, i, i)) then
+			minorNum = i-1
+		end
+	
+	end
+
+	return ((16*majorNum)+minorNum)
+	
+end
+
+function nameColors()
+	red = "ff0000"
+	orange = "ffa500"
+	yellow = "ffff00"
+	green = "008000"
+	blue = "0000ff"
+	purple = "800080"
+	
+	white = "ffffff"
+	black = "000000"
+	gray = "808080"
+	grey = "808080"
+	
+	cerulean = "007ba7"
+	lime = "00ff00"
 end
