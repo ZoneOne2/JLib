@@ -27,8 +27,6 @@ function love.load()
 	t.polygon = {}
 	t.angle = {}
 	t.center = {}
-	
-	
 end
 
 function love.draw()
@@ -42,9 +40,11 @@ function love.draw()
 
 		
 		drawGrid(50)
+
 		
 		
 		lg.setLineWidth(1)
+
 		
 		lg.setColor(255,0,0)
 		lg.circle("fill",0,0,10)
@@ -81,12 +81,10 @@ function love.draw()
 			pointPolygon("line",t.polygon)
 		end
 		
-		
 		drawButtons()
 	
 	
 	lg.pop()
-
 end
 
 function love.update(dt)
@@ -103,10 +101,7 @@ function love.update(dt)
 	t3[1] = {26,31}
 	
 
-	print(fps,pointTypes[activePointType],mx,my,buttons[1].y)
-
-	
-	
+	--print(fps,pointTypes[activePointType],mx,my,buttons[1].y)
 end
 
 function love.focus(bool)
@@ -116,6 +111,7 @@ function love.keypressed( key, unicode )
 	if key == "tab" then
 		activePointType = advCirc(activePointType,1,#pointTypes)
 	end
+	--
 end
 
 function love.keyreleased( key, unicode )
@@ -126,6 +122,8 @@ function love.mousepressed( x, y, button )
 	if button == "l" then
 	
 		table.insert(t[pointTypes[activePointType]],{mx, my})
+
+		checkButtonPress()
 	
 	end
 	

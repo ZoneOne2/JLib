@@ -1,6 +1,11 @@
 
 function init()
 	lg = love.graphics
+
+	defaultFont = love.graphics.newFont(12)
+	smallFont = love.graphics.newFont(10)
+	smallestFont = love.graphics.newFont(8)
+	love.graphics.setFont(defaultFont)
 	
 	window = {}
 	window.width = lg.getWidth()
@@ -63,9 +68,10 @@ end
 --p1=alpha/a, p2=gamma/c, p3=beta/b
 function findAngle(p1,p2,p3)
 
-	a = dist(p2,p3)
-	b = dist(p1,p2)
-	c = dist(p1,p3)
+	local a = dist(p2,p3)
+	local b = dist(p1,p2)
+	local c = dist(p1,p3)
+	local gamma = 0
 	
 	--check for case where p1 is the same as p2
 	if (p1[1]==p2[1] and p1[2]==p2[2]) then
@@ -91,7 +97,7 @@ end
 function mergeTables(...)
 	local arg = {...}
 
-	merged = {}
+	local merged = {}
 	
 	for i=1, #arg do
 		for j, item in pairs(arg[i]) do
@@ -105,7 +111,7 @@ end
 
 function printTable(t)
 	
-	text = ""
+	local text = ""
 	
 	for i, item in pairs(t) do
 			text = text..item.."\t"
@@ -118,7 +124,7 @@ end
 function pointLine(...)
 	local arg = {...}
 	
-	lineTable = {}
+	local lineTable = {}
 	
 	for i, tab in pairs(arg) do
 		for j, point in pairs(tab) do
@@ -134,7 +140,7 @@ end
 function pointPolygon(polyType,...)
 	local arg = {...}
 	
-	polyTable = {}
+	local polyTable = {}
 	
 	for i, tab in pairs(arg) do
 		for j, point in pairs(tab) do
@@ -154,7 +160,7 @@ end
 
 function advCirc(var, dist, limit)
 	
-	retVal = (var+dist)%limit
+	local retVal = (var+dist)%limit
 	
 	if retVal == 0 then
 	
@@ -176,9 +182,9 @@ function findClosestPoint(refPoint,...)
 	local arg = {...}
 	
 	--closest = {arg[1][1][1], arg[1][1][2]}
-	closestDist = dist(refPoint,arg[1][1])
-	closestArg = 1
-	closestTab = 1
+	local closestDist = dist(refPoint,arg[1][1])
+	local closestArg = 1
+	local closestTab = 1
 	
 	for i, tab in pairs(arg) do
 		for j, point in pairs(tab) do
@@ -241,7 +247,7 @@ end
 --refPoint is point in question, poly is table containing points representing polygon that point is/is not inside
 function isInside(refPoint,poly)
 
-	sumAngles = 0
+	local sumAngles = 0
 	
 	for i, point in pairs(poly) do
 		
@@ -296,15 +302,38 @@ function setButtons()
 	--mouseOverText: text to display on mouseover if mouse-over is true
 	--action: function to execute upon click
 	
-	createButton("Test Button R",nil,"rectangle",17,18,100,50)
+	createButton("Test Button R",testFunc,"rectangle",0,0,100,30)
 	buttons[#buttons].color = lime
+	buttons[#buttons].image = love.graphics.newImage("test.png")
+	buttons[#buttons].bounds = getButtonBounds(buttons[#buttons])
+
+	--100x30
 	
-	createButton("Test Button C",nil,"circle",8,8,7)
-	buttons[#buttons].color = cerulean
+	--createButton("Test Button C",nil,"circle",8,8,7)
+	--buttons[#buttons].color = cerulean
 	
 
 end
 
+function getButtonBounds(button)
+
+	local p1 = {button.x,button.y}
+	local p2 = {}
+	local p3 = {}
+	local p4 = {}
+
+
+	if (button.shape == "rectangle") then
+		p2 = {(button.x+button.width),(button.y)}
+		p3 = {(button.x+button.width),(button.y-button.height)}
+		p4 = {(button.x),(button.y-button.height)}
+
+		return {p1,p2,p3,p4}
+	end
+
+end
+
+--...: x,y of top-left corner for rectangle
 function createButton(text,action,shape,...)
 	local arg = {...}
 	
@@ -334,23 +363,63 @@ function createButton(text,action,shape,...)
 end
 
 function drawButtons()
---TODO: *Add text to buttons and optimize placement
---		*look for image and draw over if it exists
---		*Outline for buttons
+--TODO: mouse-over text
+--		add shape for image
+--		remove polygon shape
 	for i, button in pairs(buttons) do
 
-		local RGB = HEXtoRGB(button.color)
-		lg.setColor(RGB[1],RGB[2],RGB[3])
-		
+		lg.push()
+		lg.translate(button.x,button.y)
+		lg.scale(1,-1)
+
+		local textWidth = defaultFont:getWidth(button.text)
+		local textHeight = defaultFont:getHeight(button.text)
+
+		setHexColor(button.color)
+
 		if (button.shape == "rectangle") then
-			lg.rectangle("fill",button.x,button.y,button.width,button.height)
+
+			if (button.image ~= nil) then
+				button.width = button.image:getWidth()
+				button.height = button.image:getHeight()
+
+				setHexColor(white)
+				lg.draw(button.image,0,0)
+			else
+
+				lg.rectangle("fill",0,0,button.width,button.height)
+
+			end
+
+			setHexColor(black)
+			lg.print(button.text,(button.width/2)-(textWidth/2),(button.height/2)-(textHeight/2))
+
 		elseif (button.shape == "circle") then
-			lg.circle("fill",button.x,button.y,button.radius)
+
+			lg.circle("fill",0,0,button.radius)
+
+			setHexColor(black)
+			lg.print(button.text,button.radius+5,-(textHeight/2))
+
 		elseif (button.shape == "polygon") then
+
 			pointPolygon("fill",button.p)
+
 		end
 	
+		lg.pop()
 	
+	end
+
+end
+
+function checkButtonPress()
+
+	for i, button in pairs(buttons) do
+		if ( isInside({mx,my},button.bounds) ) then
+			button.action()
+		end
+
 	end
 
 end
@@ -369,10 +438,10 @@ end
 
 function DECtoHEX(DecNum)
 	
-	alphaNumeric = "0123456789abcdef"
+	local alphaNumeric = "0123456789abcdef"
 	
-	majorNum = 0
-	minorNum = 0
+	local majorNum = 0
+	local minorNum = 0
 	
 	while (DecNum>=16) do
 		DecNum = DecNum - 16
@@ -388,10 +457,10 @@ end
 --converts 2 digit hexadecimal string to decimal integer
 function HEXtoDEC(HexNum)
 
-	alphaNumeric = "0123456789abcdef"
+	local alphaNumeric = "0123456789abcdef"
 	
-	majorNum = string.sub(HexNum, 1, 1)
-	minorNum = string.sub(HexNum, 2, 2)
+	local majorNum = string.sub(HexNum, 1, 1)
+	local minorNum = string.sub(HexNum, 2, 2)
 	
 	for i=1, #alphaNumeric, 1 do
 	
@@ -424,4 +493,18 @@ function nameColors()
 	
 	cerulean = "007ba7"
 	lime = "00ff00"
+end
+
+function setHexColor(hexColor)
+
+	local RGB = HEXtoRGB(hexColor)
+
+	lg.setColor(RGB[1],RGB[2],RGB[3])
+
+end
+
+function testFunc() 
+
+	for n in pairs(_G) do print(n,_G[n]) end
+
 end
