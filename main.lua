@@ -22,6 +22,8 @@ function love.load()
 	colorFind.R.center = 0
 	colorFind.G.center = 0
 	colorFind.B.center = 255
+
+	testAudio = love.audio.newSource("GoodMorningTucson.mp3")
 	
 	
 	t = {}
@@ -157,4 +159,43 @@ function love.mousereleased( x, y, button )
 end
 
 function love.quit()
+end
+
+
+function setButtons()
+
+	buttons = {}
+	
+	--shape: rectangle, circle, or polygon
+		--rectangle:
+			--x: top-left corner x-coordinate
+			--y: top-left corner y-coordinate
+			--width: button width
+			--height: button height
+		--circle:
+			--x: center x-coordinate
+			--y: center y-coordinate
+			--width: button radius
+		--polygon:
+			--p: table containing points
+				--p[1]: x
+				--p[2]: y
+	--color: color of button
+	--image: image of button (if one exists)
+	--text: text to display on button
+	--mouseOver: true/false for mouseover text
+	--mouseOverText: text to display on mouseover if mouse-over is true
+	--action: function to execute upon click
+	
+	createButton("Test Button R",testFunc,"rectangle",0,0,100,30)
+	buttons[#buttons].color = lime
+	buttons[#buttons].image = love.graphics.newImage("test.png")
+	buttons[#buttons].bounds = getButtonBounds(buttons[#buttons])
+
+	--100x30
+	
+	--createButton("Test Button C",nil,"circle",8,8,7)
+	--buttons[#buttons].color = cerulean
+	
+
 end

@@ -11,8 +11,6 @@ function init()
 	window.width = lg.getWidth()
 	window.height = lg.getHeight()
 
-	testAudio = love.audio.newSource("GoodMorningTucson.mp3")
-	
 	nameColors()
 	
 	setButtons()
@@ -358,6 +356,8 @@ function percentError(expected,obtained)
 
 end
 
+--[[PLACE IN main.lua for specific project
+
 function setButtons()
 
 	buttons = {}
@@ -395,6 +395,8 @@ function setButtons()
 	
 
 end
+
+]]
 
 function getButtonBounds(button)
 
@@ -589,6 +591,5 @@ end
 function testFunc() 
 
 	for n in pairs(_G) do print(n,_G[n]) end
-	love.audio.play(testAudio)
 
 end
