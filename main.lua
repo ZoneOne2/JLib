@@ -82,6 +82,10 @@ function love.draw()
 			pointPolygon("line",t.polygon)
 		end
 		
+		if (#t.angle==2) then
+			pointLine(t.angle)
+		end
+
 		drawButtons()
 	
 	
@@ -101,10 +105,14 @@ function love.update(dt)
 	t3 = {}
 	t3[1] = {26,31}
 	
-	if (#t.polygon>2) then
-		print(fps,mx,my,isInside(t1[1],t.polygon))
+	if (#t.angle==2) then
+		lineTest = {
+					{t.angle[1][1],t.angle[1][2]},
+					{t.angle[2][1],t.angle[2][2]}
+					}
+		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
 	else
-		print(fps,mx,my)
+		print(fps,pointTypes[activePointType],mx,my)
 	end
 
 end
@@ -137,6 +145,7 @@ function love.mousepressed( x, y, button )
 	end
 	
 	if button == "r" then
+		--TODO: only works if at least one polygon point exists, why?
 		forRemove = findClosestPoint({mx,my},t.polygon,t.angle,t.center)
 		table.remove(forRemove[1],forRemove[2])
 	

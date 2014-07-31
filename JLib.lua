@@ -282,6 +282,76 @@ function isInside(refPoint,poly)
 
 end
 
+--xq,yq are x and y for point in question (refPoint)
+--TODO: general function for rearranging points to go in order with bottom-leftmost first?
+function isOnLine(refPoint,line)
+
+	local lineSlope = findSlope(line[1],line[2])
+
+	local x1 = line[1][1]
+	local y1 = line[1][2]
+	local x2 = line[2][1]
+	local y2 = line[2][2]
+
+	local xq = refPoint[1]
+	local yq = refPoint[2]
+
+	
+	--make sure point1 is always the bottom-leftmost point.
+	if (x2 < x1) then
+
+		x1 = line[2][1]
+		y1 = line[2][2]
+		x2 = line[1][1]
+		y2 = line[1][2]
+
+	elseif (x2 == x1) then
+		if (y2 < y1) then
+
+			x1 = line[2][1]
+			y1 = line[2][2]
+			x2 = line[1][1]
+			y2 = line[1][2]
+
+		end
+	end
+
+
+
+	--check for vertical line case
+	if (lineSlope == "inf") then
+
+		if (x1 == xq) then
+
+			if ( (yq>=y1) and (yq<=y2) ) then
+				return true
+			else
+				return false
+			end
+
+		else
+				return false
+		end
+
+	end
+
+
+	--if not vertical line, check to see if point is on line
+	if ( (yq-y1) == (lineSlope*(xq-x1)) ) then
+
+		--check to make sure it's in the bounds of the line
+		if ( (xq>=x1) and (xq<=x2) ) then
+			return true
+		else
+			return false
+		end
+
+	else
+		return false
+	end
+
+end
+
 function percentError(expected,obtained)
 
 	return (math.abs(expected-obtained)/(expected))*100
