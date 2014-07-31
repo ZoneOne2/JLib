@@ -19,7 +19,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 2127,
+				"buffer_size": 3466,
 				"line_ending": "Windows"
 			}
 		},
@@ -27,7 +27,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 9362,
+				"buffer_size": 10841,
 				"line_ending": "Windows"
 			}
 		}
@@ -131,15 +131,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 2127,
+						"buffer_size": 3466,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								38,
-								38
+								2462,
+								2462
 							]
 						],
 						"settings":
@@ -164,15 +164,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 9362,
+						"buffer_size": 10841,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8110,
-								8110
+								209,
+								209
 							]
 						],
 						"settings":

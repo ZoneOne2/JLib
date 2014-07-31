@@ -1,0 +1,2 @@
+Add left/right/middle buttons to mousepress in JLib template
+Add mouse = {mx,my} to jupdate
