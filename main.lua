@@ -1,5 +1,6 @@
 function love.load()
 	require "JLib"
+	
 	init()
 	
 	pointTypes = {"polygon", "angle", "center"}
@@ -102,6 +103,7 @@ function love.update(dt)
 	
 
 	--print(fps,pointTypes[activePointType],mx,my,buttons[1].y)
+
 end
 
 function love.focus(bool)
@@ -110,6 +112,10 @@ end
 function love.keypressed( key, unicode )
 	if key == "tab" then
 		activePointType = advCirc(activePointType,1,#pointTypes)
+	end
+
+	if key == "`" then
+		debug.debug()
 	end
 	--
 end

@@ -10,6 +10,8 @@ function init()
 	window = {}
 	window.width = lg.getWidth()
 	window.height = lg.getHeight()
+
+	testAudio = love.audio.newSource("GoodMorningTucson.mp3")
 	
 	nameColors()
 	
@@ -337,14 +339,16 @@ end
 function createButton(text,action,shape,...)
 	local arg = {...}
 	
-	buttons[#buttons+1] = {}
-	buttons[#buttons].shape = shape
-	buttons[#buttons].text = text
-	buttons[#buttons].action = action
+	buttons[#buttons+1] = {
+		shape = shape,
+		text = text,
+		action = action,
+		
+		color = "000000",
+		mouseOver = false,
+		mouseOverText = text,
+	}
 	
-	buttons[#buttons].color = "000000"
-	buttons[#buttons].mouseOver = false
-	buttons[#buttons].mouseOverText = text
 	
 	if (shape == "polygon") then
 		buttons[#buttons].p = arg[1]
@@ -506,5 +510,6 @@ end
 function testFunc() 
 
 	for n in pairs(_G) do print(n,_G[n]) end
+	love.audio.play(testAudio)
 
 end
