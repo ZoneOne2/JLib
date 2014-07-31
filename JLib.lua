@@ -247,10 +247,19 @@ function setColorFind(seeking)
 end
 
 --refPoint is point in question, poly is table containing points representing polygon that point is/is not inside
+--TODO: Add variables number of arguments for multiple tables containing points
 function isInside(refPoint,poly)
 
 	local sumAngles = 0
 	
+	--check to see if refPoint is one of the points making up the polygon
+	for i, point in pairs(poly) do
+		if ( (refPoint[1] == point[1]) and (refPoint[2] == point[2])) then
+			return true
+		end
+	end
+
+	--if refPoint isn't one of the points making up the polygon, check to see if it is a point enclosed by it
 	for i, point in pairs(poly) do
 		
 		--add angles made from (point-refPoint-nextPoint) for each point

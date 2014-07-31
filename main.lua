@@ -101,8 +101,11 @@ function love.update(dt)
 	t3 = {}
 	t3[1] = {26,31}
 	
-
-	--print(fps,pointTypes[activePointType],mx,my,buttons[1].y)
+	if (#t.polygon>2) then
+		print(fps,mx,my,isInside(t1[1],t.polygon))
+	else
+		print(fps,mx,my)
+	end
 
 end
 
