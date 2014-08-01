@@ -1,4 +1,5 @@
 function love.load()
+
 	require "JLib"
 	
 	init()
@@ -30,7 +31,8 @@ function love.load()
 	t.polygon = {}
 	t.angle = {}
 	t.center = {}
-end
+
+ end
 
 function love.draw()
 
@@ -76,23 +78,24 @@ function love.draw()
 			
 				lg.circle("fill",point[1],point[2],1)
 				
-			end
+			 end
 			
-		end
+		 end
 		
 		if (#t.polygon>2) then
 			pointPolygon("line",t.polygon)
-		end
+		 end
 		
 		if (#t.angle==2) then
 			pointLine(t.angle)
-		end
+		 end
 
 		drawButtons()
 	
 	
-	lg.pop()
-end
+	 lg.pop()
+
+ end
 
 function love.update(dt)
 	
@@ -113,28 +116,35 @@ function love.update(dt)
 					{t.angle[2][1],t.angle[2][2]}
 					}
 		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
-	else
+	 else
 		print(fps,pointTypes[activePointType],mx,my)
-	end
+	 end
 
-end
+ end
 
 function love.focus(bool)
-end
+
+ end
 
 function love.keypressed( key, unicode )
+
 	if key == "tab" then
+
 		activePointType = advCirc(activePointType,1,#pointTypes)
-	end
+
+	 end
 
 	if key == "`" then
+
 		debug.debug()
-	end
-	--
-end
+
+	 end
+
+ end
 
 function love.keyreleased( key, unicode )
-end
+
+ end
 
 function love.mousepressed( x, y, button )
 	
@@ -144,25 +154,28 @@ function love.mousepressed( x, y, button )
 
 		checkButtonPress()
 	
-	end
+	 end
 	
 	if button == "r" then
 		--TODO: only works if at least one polygon point exists, why?
 		forRemove = findClosestPoint({mx,my},t.polygon,t.angle,t.center)
 		table.remove(forRemove[1],forRemove[2])
 	
-	end
+	 end
 
-end
+ end
 
 function love.mousereleased( x, y, button )
-end
+
+ end
 
 function love.quit()
-end
+
+ end
 
 
 function setButtons()
+
 
 	buttons = {}
 	
@@ -198,4 +211,4 @@ function setButtons()
 	--buttons[#buttons].color = cerulean
 	
 
-end
+ end

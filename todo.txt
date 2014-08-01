@@ -1,2 +1,7 @@
+Modify all functions that take points to also search for p.x and p.y instead of just p[1] and p[2]
+fix buttons using better constructor technique
+
+add spaces before }'s that don't line up correctly in Sublime Text
+
 Add left/right/middle buttons to mousepress in JLib template
 Add mouse = {mx,my} to jupdate

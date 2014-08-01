@@ -1,5 +1,6 @@
 
 function init()
+
 	lg = love.graphics
 
 	defaultFont = love.graphics.newFont(12)
@@ -14,13 +15,16 @@ function init()
 	nameColors()
 	
 	setButtons()
-end
+
+ end
 
 function jupdate(dt)
+
 	fps = math.floor(1/dt)
 	mx = love.mouse.getX()-(window.width/2)
 	my = -love.mouse.getY()+(window.height/2)
-end
+
+ end
 
 function findIntersect(L1,L2)
 --WIP*
@@ -41,7 +45,7 @@ function findIntersect(L1,L2)
 
 	return L2.slope
 
-end
+ end
 
 function findSlope(p1,p2)
 
@@ -55,14 +59,14 @@ function findSlope(p1,p2)
 	
 		return "inf"
 	
-	else
+	 else
 	
 		return (p2[2]-p1[2])/(p2[1]-p1[1])
 	
-	end
+	 end
 	
 
-end
+ end
 
 --p2 is apex of angle
 --p1=alpha/a, p2=gamma/c, p3=beta/b
@@ -77,22 +81,23 @@ function findAngle(p1,p2,p3)
 	if (p1[1]==p2[1] and p1[2]==p2[2]) then
 	
 		gamma = 0
-		
+	
+	--else compute gamma	
 	else
 	
 		gamma = math.acos( ((a^2)+(b^2)-(c^2)) / (2*a*b) )
 		
-	end
+	 end
 		
 	return gamma
 
-end
+ end
 
 function dist(p1,p2)
 	
 	return math.sqrt( ((p2[1]-p1[1])^2) + ((p2[2]-p1[2])^2) )
 
-end
+ end
 
 function mergeTables(...)
 	local arg = {...}
@@ -100,26 +105,32 @@ function mergeTables(...)
 	local merged = {}
 	
 	for i=1, #arg do
+
 		for j, item in pairs(arg[i]) do
+
 			table.insert(merged,item)
-		end
-	end
+
+		 end
+
+	 end
 	
 	return merged
 
-end
+ end
 
 function printTable(t)
 	
 	local text = ""
 	
 	for i, item in pairs(t) do
-			text = text..item.."\t"
-	end
+
+		text = text..item.."\t"
+
+	 end
 	
 	print(text)
 	
-end
+ end
 
 function pointLine(...)
 	local arg = {...}
@@ -127,14 +138,18 @@ function pointLine(...)
 	local lineTable = {}
 	
 	for i, tab in pairs(arg) do
+
 		for j, point in pairs(tab) do
+
 			lineTable = mergeTables(lineTable,point)
-		end
-	end
+
+		 end
+
+	 end
 	
 	lg.line(lineTable)
 
-end
+ end
 
 --arg[1] is type, rest are vertices
 function pointPolygon(polyType,...)
@@ -143,20 +158,24 @@ function pointPolygon(polyType,...)
 	local polyTable = {}
 	
 	for i, tab in pairs(arg) do
+
 		for j, point in pairs(tab) do
+
 			polyTable = mergeTables(polyTable,point)
-		end
-	end
+
+		 end
+
+	 end
 	
 	lg.polygon(polyType,polyTable)
 
-end
+ end
 
 function adv(var, dist)
 
 	return var + dist
 
-end
+ end
 
 function advCirc(var, dist, limit)
 	
@@ -170,9 +189,9 @@ function advCirc(var, dist, limit)
 	
 		return retVal
 		
-	end
+	 end
 
-end
+ end
 
 --takes tables of points
 --refPoint is point in question, rest of args are tables containing possible points
@@ -187,19 +206,25 @@ function findClosestPoint(refPoint,...)
 	local closestTab = 1
 	
 	for i, tab in pairs(arg) do
+
 		for j, point in pairs(tab) do
+
 			if (dist(refPoint,point)<closestDist) then
+
 				--closest = {point[1], point[2]}
 				closestDist = dist(refPoint,point)
 				closestArg = i
 				closestTab = j
-			end
-		end
-	end
+
+			 end
+
+		 end
+
+	 end
 	
 	return {arg[closestArg],closestTab}
 
-end
+ end
 
 function pause()
 
@@ -208,7 +233,7 @@ function pause()
 	
 	while(true)do end
 	
-end
+ end
 
 function drawGrid(scale)
 
@@ -217,32 +242,40 @@ function drawGrid(scale)
 	
 	--right
 	for i=0, window.width/2, scale do
+
 		lg.line(i,window.height/2,i,-window.height/2)
-	end
+
+	 end
 	
 	--left, start at -scale since 0 was already done in right
 	for i=-scale, -window.width/2, -scale do
+
 		lg.line(i,window.height/2,i,-window.height/2)
-	end
+
+	 end
 	
 	--top
 	for i=0, window.height/2, scale do
+
 		lg.line(window.width/2,i,-window.width/2,i)
-	end
+
+	 end
 	
 	--bottom, start at -scale since 0 was already done in top
 	for i=-scale, -window.height/2, -scale do
+
 		lg.line(window.width/2,i,-window.width/2,i)
-	end
+
+	 end
 	
-end
+ end
 
 
 function setColorFind(seeking)
 
 	lg.setColor(colorFind.R[seeking],colorFind.G[seeking],colorFind.B[seeking])
 
-end
+ end
 
 --refPoint is point in question, poly is table containing points representing polygon that point is/is not inside
 --TODO: Add variables number of arguments for multiple tables containing points
@@ -252,10 +285,14 @@ function isInside(refPoint,poly)
 	
 	--check to see if refPoint is one of the points making up the polygon
 	for i, point in pairs(poly) do
+
 		if ( (refPoint[1] == point[1]) and (refPoint[2] == point[2])) then
+
 			return true
-		end
-	end
+
+		 end
+
+	 end
 
 	--if refPoint isn't one of the points making up the polygon, check to see if it is a point enclosed by it
 	for i, point in pairs(poly) do
@@ -264,21 +301,29 @@ function isInside(refPoint,poly)
 		
 		--nextPoint for lastpoint (poly[#poly]) is firstpoint (poly[1])
 		if (i == #poly) then
-			sumAngles = sumAngles + findAngle(point,refPoint,poly[1])
-		else
-			sumAngles = sumAngles + findAngle(point,refPoint,poly[i+1])
-		end
 
-	end
+			sumAngles = sumAngles + findAngle(point,refPoint,poly[1])
+
+		 else
+
+			sumAngles = sumAngles + findAngle(point,refPoint,poly[i+1])
+
+		 end
+
+	 end
 	
 	--tolerance for %error here:
 	if (percentError(2*math.pi,sumAngles)<1e-5) then
-		return true
-	else
-		return false
-	end
 
-end
+		return true
+
+	 else
+
+		return false
+
+	 end
+
+ end
 
 --xq,yq are x and y for point in question (refPoint)
 --TODO: general function for rearranging points to go in order with bottom-leftmost first?
@@ -303,7 +348,8 @@ function isOnLine(refPoint,line)
 		x2 = line[1][1]
 		y2 = line[1][2]
 
-	elseif (x2 == x1) then
+	 elseif (x2 == x1) then
+
 		if (y2 < y1) then
 
 			x1 = line[2][1]
@@ -311,8 +357,9 @@ function isOnLine(refPoint,line)
 			x2 = line[1][1]
 			y2 = line[1][2]
 
-		end
-	end
+		 end
+
+	 end
 
 
 
@@ -322,16 +369,22 @@ function isOnLine(refPoint,line)
 		if (x1 == xq) then
 
 			if ( (yq>=y1) and (yq<=y2) ) then
+
 				return true
-			else
-				return false
-			end
 
-		else
-				return false
-		end
+			 else
 
-	end
+				return false
+
+			 end
+
+		 else
+
+			return false
+
+		 end
+
+	 end
 
 
 	--if not vertical line, check to see if point is on line
@@ -339,22 +392,28 @@ function isOnLine(refPoint,line)
 
 		--check to make sure it's in the bounds of the line
 		if ( (xq>=x1) and (xq<=x2) ) then
+
 			return true
-		else
+
+		 else
+
 			return false
-		end
 
-	else
+		 end
+
+	 else
+
 		return false
-	end
 
-end
+	 end
+
+ end
 
 function percentError(expected,obtained)
 
 	return (math.abs(expected-obtained)/(expected))*100
 
-end
+ end
 
 --[[PLACE IN main.lua for specific project
 
@@ -405,16 +464,17 @@ function getButtonBounds(button)
 	local p3 = {}
 	local p4 = {}
 
-
 	if (button.shape == "rectangle") then
+
 		p2 = {(button.x+button.width),(button.y)}
 		p3 = {(button.x+button.width),(button.y-button.height)}
 		p4 = {(button.x),(button.y-button.height)}
 
 		return {p1,p2,p3,p4}
-	end
 
-end
+	 end
+
+ end
 
 --...: x,y of top-left corner for rectangle
 function createButton(text,action,shape,...)
@@ -432,20 +492,25 @@ function createButton(text,action,shape,...)
 	
 	
 	if (shape == "polygon") then
+
 		buttons[#buttons].p = arg[1]
+
 	elseif (shape == "rectangle") then
+
 		buttons[#buttons].x = arg[1]
 		buttons[#buttons].y = arg[2]
 		buttons[#buttons].width = arg[3]
 		buttons[#buttons].height = arg[4]
+
 	elseif (shape == "circle") then
+
 		buttons[#buttons].x = arg[1]
 		buttons[#buttons].y = arg[2]
 		buttons[#buttons].radius = arg[3]
-	end
-	
 
-end
+	 end
+
+ end
 
 function drawButtons()
 --TODO: mouse-over text
@@ -454,72 +519,77 @@ function drawButtons()
 	for i, button in pairs(buttons) do
 
 		lg.push()
-		lg.translate(button.x,button.y)
-		lg.scale(1,-1)
+			lg.translate(button.x,button.y)
+			lg.scale(1,-1)
 
-		local textWidth = defaultFont:getWidth(button.text)
-		local textHeight = defaultFont:getHeight(button.text)
+			local textWidth = defaultFont:getWidth(button.text)
+			local textHeight = defaultFont:getHeight(button.text)
 
-		setHexColor(button.color)
+			setHexColor(button.color)
 
-		if (button.shape == "rectangle") then
+			if (button.shape == "rectangle") then
 
-			if (button.image ~= nil) then
-				button.width = button.image:getWidth()
-				button.height = button.image:getHeight()
+				if (button.image ~= nil) then
 
-				setHexColor(white)
-				lg.draw(button.image,0,0)
-			else
+					button.width = button.image:getWidth()
+					button.height = button.image:getHeight()
 
-				lg.rectangle("fill",0,0,button.width,button.height)
+					setHexColor(white)
+					lg.draw(button.image,0,0)
 
-			end
+				else
 
-			setHexColor(black)
-			lg.print(button.text,(button.width/2)-(textWidth/2),(button.height/2)-(textHeight/2))
+					lg.rectangle("fill",0,0,button.width,button.height)
 
-		elseif (button.shape == "circle") then
+				 end
 
-			lg.circle("fill",0,0,button.radius)
+				setHexColor(black)
+				lg.print(button.text,(button.width/2)-(textWidth/2),(button.height/2)-(textHeight/2))
 
-			setHexColor(black)
-			lg.print(button.text,button.radius+5,-(textHeight/2))
+			elseif (button.shape == "circle") then
 
-		elseif (button.shape == "polygon") then
+				lg.circle("fill",0,0,button.radius)
 
-			pointPolygon("fill",button.p)
+				setHexColor(black)
+				lg.print(button.text,button.radius+5,-(textHeight/2))
 
-		end
+			elseif (button.shape == "polygon") then
+
+				pointPolygon("fill",button.p)
+
+			 end
+		
+		 lg.pop()
 	
-		lg.pop()
-	
-	end
+	 end
 
-end
+ end
 
 function checkButtonPress()
 
 	for i, button in pairs(buttons) do
+
 		if ( isInside({mx,my},button.bounds) ) then
+
 			button.action()
-		end
 
-	end
+		 end
 
-end
+	 end
+
+ end
 
 function RGBtoHEX(R, G, B)
 
 	return DECtoHEX(R)..DECtoHEX(G)..DECtoHEX(B)
 
-end
+ end
 
 function HEXtoRGB(hex)
 	
 	return { HEXtoDEC(string.sub(hex,1,2)), HEXtoDEC(string.sub(hex,3,4)), HEXtoDEC(string.sub(hex,5,6)) }
 	
-end
+ end
 
 function DECtoHEX(DecNum)
 	
@@ -529,15 +599,17 @@ function DECtoHEX(DecNum)
 	local minorNum = 0
 	
 	while (DecNum>=16) do
+
 		DecNum = DecNum - 16
 		majorNum = majorNum + 1
-	end
+
+	 end
 	
 	minorNum = (DecNum % 16)
 	
 	return string.sub(alphaNumeric,(majorNum+1),(majorNum+1))..string.sub(alphaNumeric,(minorNum+1),(minorNum+1))
 	
-end
+ end
 
 --converts 2 digit hexadecimal string to decimal integer
 function HEXtoDEC(HexNum)
@@ -550,20 +622,25 @@ function HEXtoDEC(HexNum)
 	for i=1, #alphaNumeric, 1 do
 	
 		if (majorNum == string.sub(alphaNumeric, i, i)) then
+
 			majorNum = i-1
-		end
+
+		 end
 		
 		if (minorNum == string.sub(alphaNumeric, i, i)) then
+
 			minorNum = i-1
-		end
+
+		 end
 	
-	end
+	 end
 
 	return ((16*majorNum)+minorNum)
 	
-end
+ end
 
 function nameColors()
+
 	red = "ff0000"
 	orange = "ffa500"
 	yellow = "ffff00"
@@ -578,7 +655,8 @@ function nameColors()
 	
 	cerulean = "007ba7"
 	lime = "00ff00"
-end
+
+ end
 
 function setHexColor(hexColor)
 
@@ -586,10 +664,10 @@ function setHexColor(hexColor)
 
 	lg.setColor(RGB[1],RGB[2],RGB[3])
 
-end
+ end
 
 function testFunc() 
 
 	for n in pairs(_G) do print(n,_G[n]) end
 
-end
+ end
