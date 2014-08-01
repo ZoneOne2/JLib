@@ -24,6 +24,8 @@ function jupdate(dt)
 	mx = love.mouse.getX()-(window.width/2)
 	my = -love.mouse.getY()+(window.height/2)
 
+	mouse = {x=mx, y=my}
+
  end
 
 function findIntersect(L1,L2)
@@ -47,21 +49,44 @@ function findIntersect(L1,L2)
 
  end
 
-function findSlope(p1,p2)
+function findSlope(point1,point2)
+
+	--check to make sure points contain x and
+	local p1,p2
+
+	if (point1.x and point1.y) then
+
+		p1 = {x=point1.x, y=point1.y}
+
+	 else
+
+		error("point 1 is missing x and/or y")
+
+	 end
+
+	if (point2.x and point2.y) then
+
+		p2 = {x=point2.x, y=point2.y}
+
+	 else
+
+		error("point 2 is missing x and/or y")
+
+	 end
 
 	--check if points are the same
-	if (p1[1]==p2[1] and p1[2]==p2[2]) then
+	if (p1.x==p2.x and p1.y==p2.y) then
 	
 		return 0
 	
 	--check if line is vertical
-	elseif (p1[1] == p2[1]) then
+	elseif (p1.x == p2.x) then
 	
 		return "inf"
 	
 	 else
 	
-		return (p2[2]-p1[2])/(p2[1]-p1[1])
+		return (p2.y-p1.y)/(p2.x-p1.x)
 	
 	 end
 	
@@ -70,7 +95,40 @@ function findSlope(p1,p2)
 
 --p2 is apex of angle
 --p1=alpha/a, p2=gamma/c, p3=beta/b
-function findAngle(p1,p2,p3)
+function findAngle(point1,point2,point3)
+
+	--check to make sure points contain x and y
+	local p1,p2,p3
+
+	if (point1.x and point1.y) then
+
+		p1 = {x=point1.x, y=point1.y}
+
+	 else
+
+		error("point 1 is missing x and/or y")
+
+	 end
+
+	if (point2.x and point2.y) then
+
+		p2 = {x=point2.x, y=point2.y}
+
+	 else
+
+		error("point 2 is missing x and/or y")
+
+	 end
+
+	if (point3.x and point3.y) then
+
+		p3 = {x=point3.x, y=point3.y}
+
+	 else
+
+		error("point 3 is missing x and/or y")
+
+	 end
 
 	local a = dist(p2,p3)
 	local b = dist(p1,p2)
@@ -78,7 +136,7 @@ function findAngle(p1,p2,p3)
 	local gamma = 0
 	
 	--check for case where p1 is the same as p2
-	if (p1[1]==p2[1] and p1[2]==p2[2]) then
+	if (p1.x==p2.x and p1.y==p2.y) then
 	
 		gamma = 0
 	
@@ -93,9 +151,33 @@ function findAngle(p1,p2,p3)
 
  end
 
-function dist(p1,p2)
-	
-	return math.sqrt( ((p2[1]-p1[1])^2) + ((p2[2]-p1[2])^2) )
+function dist(point1,point2)
+
+	--check to make sure points contain x and y
+	local p1,p2
+
+	if (point1.x and point1.y) then
+
+		p1 = {x=point1.x, y=point1.y}
+
+	 else
+
+		error("point 1 is missing x and/or y")
+
+	 end
+
+	if (point2.x and point2.y) then
+
+		p2 = {x=point2.x, y=point2.y}
+
+
+	 else
+
+		error("point 2 is missing x and/or y")
+
+	 end
+
+	return math.sqrt( ((p2.x-p1.x)^2) + ((p2.y-p1.y)^2) )
 
  end
 
@@ -141,7 +223,8 @@ function pointLine(...)
 
 		for j, point in pairs(tab) do
 
-			lineTable = mergeTables(lineTable,point)
+			table.insert(lineTable,point.x)
+			table.insert(lineTable,point.y)
 
 		 end
 
@@ -161,7 +244,8 @@ function pointPolygon(polyType,...)
 
 		for j, point in pairs(tab) do
 
-			polyTable = mergeTables(polyTable,point)
+			table.insert(polyTable,point.x)
+			table.insert(polyTable,point.y)
 
 		 end
 
@@ -286,7 +370,7 @@ function isInside(refPoint,poly)
 	--check to see if refPoint is one of the points making up the polygon
 	for i, point in pairs(poly) do
 
-		if ( (refPoint[1] == point[1]) and (refPoint[2] == point[2])) then
+		if ( (refPoint.x == point.x) and (refPoint.y == point.y)) then
 
 			return true
 
@@ -331,31 +415,31 @@ function isOnLine(refPoint,line)
 
 	local lineSlope = findSlope(line[1],line[2])
 
-	local x1 = line[1][1]
-	local y1 = line[1][2]
-	local x2 = line[2][1]
-	local y2 = line[2][2]
+	local x1 = line[1].x
+	local y1 = line[1].y
+	local x2 = line[2].x
+	local y2 = line[2].y
 
-	local xq = refPoint[1]
-	local yq = refPoint[2]
+	local xq = refPoint.x
+	local yq = refPoint.y
 
 	
 	--make sure point1 is always the bottom-leftmost point.
 	if (x2 < x1) then
 
-		x1 = line[2][1]
-		y1 = line[2][2]
-		x2 = line[1][1]
-		y2 = line[1][2]
+		x1 = line[2].x
+		y1 = line[2].y
+		x2 = line[1].x
+		y2 = line[1].y
 
 	 elseif (x2 == x1) then
 
 		if (y2 < y1) then
 
-			x1 = line[2][1]
-			y1 = line[2][2]
-			x2 = line[1][1]
-			y2 = line[1][2]
+			x1 = line[2].x
+			y1 = line[2].y
+			x2 = line[1].x
+			y2 = line[1].y
 
 		 end
 
@@ -453,22 +537,22 @@ function setButtons()
 	--buttons[#buttons].color = cerulean
 	
 
-end
+ end
 
 ]]
 
 function getButtonBounds(button)
 
-	local p1 = {button.x,button.y}
+	local p1 = {x=button.x,y=button.y}
 	local p2 = {}
 	local p3 = {}
 	local p4 = {}
 
 	if (button.shape == "rectangle") then
 
-		p2 = {(button.x+button.width),(button.y)}
-		p3 = {(button.x+button.width),(button.y-button.height)}
-		p4 = {(button.x),(button.y-button.height)}
+		p2 = {x=(button.x+button.width),y=(button.y)}
+		p3 = {x=(button.x+button.width),y=(button.y-button.height)}
+		p4 = {x=(button.x),y=(button.y-button.height)}
 
 		return {p1,p2,p3,p4}
 
@@ -569,7 +653,7 @@ function checkButtonPress()
 
 	for i, button in pairs(buttons) do
 
-		if ( isInside({mx,my},button.bounds) ) then
+		if ( isInside(mouse,button.bounds) ) then
 
 			button.action()
 

@@ -76,7 +76,7 @@ function love.draw()
 			setColorFind(i)
 			for j, point in pairs(typeOfPoint) do
 			
-				lg.circle("fill",point[1],point[2],1)
+				lg.circle("fill",point.x,point.y,1)
 				
 			 end
 			
@@ -104,21 +104,23 @@ function love.update(dt)
 	allPoints = mergeTables(t.polygon,t.angle,t.center)
 
 	t1 = {}
-	t1[1] = {mx,my}
+	t1[1] = {x=mx,y=my}
 	t2 = {}
-	t2[1] = {97,5}
+	t2[1] = {x=97,y=5}
 	t3 = {}
-	t3[1] = {26,31}
+	t3[1] = {x=26,y=31}
 	
 	if (#t.angle==2) then
 		lineTest = {
-					{t.angle[1][1],t.angle[1][2]},
-					{t.angle[2][1],t.angle[2][2]}
+					{x=t.angle[1].x,y=t.angle[1].y},
+					{x=t.angle[2].x,y=t.angle[2].y}
 					}
 		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
 	 else
 		print(fps,pointTypes[activePointType],mx,my)
 	 end
+
+	dist({x=0,y=0},mouse)
 
  end
 
@@ -150,7 +152,7 @@ function love.mousepressed( x, y, button )
 	
 	if button == "l" then
 	
-		table.insert(t[pointTypes[activePointType]],{mx, my})
+		table.insert(t[pointTypes[activePointType]],{x=mx, y=my})
 
 		checkButtonPress()
 	
