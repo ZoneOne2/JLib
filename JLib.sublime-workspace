@@ -3,6 +3,10 @@
 	{
 		"selected_items":
 		[
+			[
+				"pol",
+				"polyTable"
+			]
 		]
 	},
 	"buffers":
@@ -19,7 +23,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 3466,
+				"buffer_size": 3642,
 				"line_ending": "Windows"
 			}
 		},
@@ -27,7 +31,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 10841,
+				"buffer_size": 12817,
 				"line_ending": "Windows"
 			}
 		}
@@ -77,6 +81,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"lowKey",
+			"lowVal",
+			"lowKey",
+			"lowVal",
 			"scroll"
 		],
 		"highlight": true,
@@ -131,15 +139,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 3466,
+						"buffer_size": 3642,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2462,
-								2462
+								1837,
+								1837
 							]
 						],
 						"settings":
@@ -147,8 +155,8 @@
 							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": 65.0,
+						"translation.y": 1188.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -164,15 +172,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 10841,
+						"buffer_size": 12817,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								209,
-								209
+								12447,
+								12447
 							]
 						],
 						"settings":
@@ -181,7 +189,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1003.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -217,7 +225,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.364418682829,
 			1.0
 		],
 		"rows":
@@ -229,7 +237,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 100.0
+		"height": 58.0
 	},
 	"replace":
 	{

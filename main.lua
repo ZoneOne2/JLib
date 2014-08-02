@@ -117,8 +117,12 @@ function love.update(dt)
 					}
 		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
 	 else
-		print(fps,pointTypes[activePointType],mx,my)
+		--print(fps,pointTypes[activePointType],mx,my)
 	 end
+
+	testTable = {1,9,8,4,key1 = -100, key2 = (100*math.pi),0,2,4,-98.5}
+
+	--print(tableMin(testTable))
 
 	dist({x=0,y=0},mouse)
 

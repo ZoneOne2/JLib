@@ -1,4 +1,3 @@
-Modify all functions that take points to also search for p.x and p.y instead of just p[1] and p[2]
 fix buttons using better constructor technique
 
 Add left/right/middle buttons to mousepress in JLib template
