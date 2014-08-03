@@ -32,6 +32,37 @@ function love.load()
 	t.angle = {}
 	t.center = {}
 
+
+	TestObj = {
+				id = 0,
+				testField = 0,
+			 }
+	function TestObj:new(o)
+
+		totalTestObjs = totalTestObjs+1
+
+		o = o or {}
+		setmetatable(o, self)
+		self.__index = self
+		o.id = #testObjs+1
+		return o
+
+	 end
+	totalTestObjs = 0
+
+
+
+	testObjs = {}
+
+	table.insert(testObjs,TestObj:new{testField = 18})
+	table.insert(testObjs,TestObj:new{testField = 7})
+	table.insert(testObjs,TestObj:new{testField = -78})
+	table.insert(testObjs,TestObj:new{testField = 0})
+	table.insert(testObjs,TestObj:new{testField = math.pi})
+	table.insert(testObjs,TestObj:new{testField = 720})
+	table.insert(testObjs,TestObj:new{testField = -18.9})
+	table.insert(testObjs,TestObj:new{testField = 8.6})
+
  end
 
 function love.draw()

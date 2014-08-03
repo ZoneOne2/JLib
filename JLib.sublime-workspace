@@ -23,7 +23,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 3642,
+				"buffer_size": 4317,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +31,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 12817,
+				"buffer_size": 13350,
 				"line_ending": "Windows"
 			}
 		}
@@ -60,6 +60,7 @@
 	},
 	"file_history":
 	[
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/JLib.lua",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/Love2D.sublime-build",
@@ -81,6 +82,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"listObj",
 			"lowKey",
 			"lowVal",
 			"lowKey",
@@ -139,15 +141,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 3642,
+						"buffer_size": 4317,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1837,
-								1837
+								1207,
+								1207
 							]
 						],
 						"settings":
@@ -155,8 +157,8 @@
 							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 65.0,
-						"translation.y": 1188.0,
+						"translation.x": 0.0,
+						"translation.y": 499.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -172,15 +174,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 12817,
+						"buffer_size": 13350,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12447,
-								12447
+								13286,
+								13286
 							]
 						],
 						"settings":
@@ -189,7 +191,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1003.0,
+						"translation.y": 1236.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

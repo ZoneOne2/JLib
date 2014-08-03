@@ -1,3 +1,4 @@
 fix buttons using better constructor technique
 
 Add left/right/middle buttons to mousepress in JLib template
+Add modes to JLib template
