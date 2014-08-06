@@ -23,7 +23,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 4317,
+				"buffer_size": 4382,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +31,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 13350,
+				"buffer_size": 14521,
 				"line_ending": "Windows"
 			}
 		}
@@ -141,15 +141,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 4317,
+						"buffer_size": 4382,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1207,
-								1207
+								2339,
+								2339
 							]
 						],
 						"settings":
@@ -158,7 +158,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 499.0,
+						"translation.y": 336.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -174,15 +174,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 13350,
+						"buffer_size": 14521,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9656,
-								9721
+								12167,
+								12167
 							]
 						],
 						"settings":
@@ -191,7 +191,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8369.0,
+						"translation.y": 1141.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -227,7 +227,7 @@
 		"cols":
 		[
 			0.0,
-			0.364418682829,
+			0.403595309655,
 			1.0
 		],
 		"rows":

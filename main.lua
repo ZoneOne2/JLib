@@ -115,6 +115,7 @@ function love.draw()
 		
 		if (#t.polygon>2) then
 			pointPolygon("line",t.polygon)
+			print(findAreaTriangle(t.polygon[1],t.polygon[2],t.polygon[3]))
 		 end
 		
 		if (#t.angle==2) then
@@ -148,7 +149,7 @@ function love.update(dt)
 					}
 		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
 	 else
-		--print(fps,pointTypes[activePointType],mx,my)
+		print(fps,pointTypes[activePointType],mx,my)
 	 end
 
 	testTable = {1,9,8,4,key1 = -100, key2 = (100*math.pi),0,2,4,-98.5}

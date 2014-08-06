@@ -892,7 +892,51 @@ function isInTable(val,tab)
 
  end
 
+function findAreaTriangle(point1,point2,point3)
 
+ --check to make sure points contain x and y
+	local p1,p2,p3
+
+	if (point1.x and point1.y) then
+
+		p1 = {x=point1.x, y=point1.y}
+
+	 else
+
+		error("point 1 is missing x and/or y")
+
+	 end
+
+	if (point2.x and point2.y) then
+
+		p2 = {x=point2.x, y=point2.y}
+
+	 else
+
+		error("point 2 is missing x and/or y")
+
+	 end
+
+	if (point3.x and point3.y) then
+
+		p3 = {x=point3.x, y=point3.y}
+
+	 else
+
+		error("point 3 is missing x and/or y")
+
+	 end
+
+	local a = dist(p2,p3)
+	local b = dist(p1,p3)
+	local c = dist(p1,p2)
+	local gamma = findAngle(p2,p3,p1)
+	local h = a*math.sin(gamma)
+	
+	return 0.5*b*h
+
+
+ end
 
 
 
