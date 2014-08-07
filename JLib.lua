@@ -28,7 +28,17 @@ function jupdate(dt)
 
  end
 
-function findIntersect(L1,L2)	
+function findIntersect(L1,L2,endsCount)	
+
+	if(endsCount == nil) then
+		endsCount = true
+	end
+
+	if (endsCount) then
+		print("endsCounted")
+	else
+		print("endsNotCounted")
+	end
 
 	local x1 = L1[1].x
 	local y1 = L1[1].y
@@ -116,41 +126,87 @@ function findIntersect(L1,L2)
 	 end
 
 	
-	--special case for L1 = vertical line
-	if (m1 == "inf") then
+	--case for ends counting as intersection
+	if (endsCount) then
+		
+		--special case for L1 = vertical line
+		if (m1 == "inf") then
 
-		if (x3<x1 and x4>x2) then
+			if (x3<=x1 and x4>=x2) then
 
-			xInt = x1
-			yInt = (m2*xInt)+b2
+				xInt = x1
+				yInt = (m2*xInt)+b2
 
-		 else
+			 else
 
-			print("m1 = infinite slope, no intersection found")
-			return false, {x=inf, y=inf}
+				print("m1 = infinite slope, no intersection found")
+				return false, {x=inf, y=inf}
 
-		 end
+			 end
 
-	--special case for L2 = vertical line
-	elseif (m2 == "inf") then
+		--special case for L2 = vertical line
+		elseif (m2 == "inf") then
 
-		if (x1<x3 and x2>x4) then
+			if (x1<=x3 and x2>=x4) then
 
-			xInt = x3
-			yInt = (m1*xInt)+b1
+				xInt = x3
+				yInt = (m1*xInt)+b1
 
-		 else
+			 else
 
-			print("m2 = infinite slope, no intersection found")
-			return false, {x=inf, y=inf}
+				print("m2 = infinite slope, no intersection found")
+				return false, {x=inf, y=inf}
 
-		 end
+			 end
 
-	--normal case
+		--normal case
+		else
+
+			xInt = (b2-b1)/(m1-m2)
+			yInt = m1*xInt+b1
+
+		end
+
+	--case for ends not counting as intersection
 	else
 
-		xInt = (b2-b1)/(m1-m2)
-		yInt = m1*xInt+b1
+		--special case for L1 = vertical line
+		if (m1 == "inf") then
+
+			if (x3<x1 and x4>x2) then
+
+				xInt = x1
+				yInt = (m2*xInt)+b2
+
+			 else
+
+				print("m1 = infinite slope, no intersection found")
+				return false, {x=inf, y=inf}
+
+			 end
+
+		--special case for L2 = vertical line
+		elseif (m2 == "inf") then
+
+			if (x1<x3 and x2>x4) then
+
+				xInt = x3
+				yInt = (m1*xInt)+b1
+
+			 else
+
+				print("m2 = infinite slope, no intersection found")
+				return false, {x=inf, y=inf}
+
+			 end
+
+		--normal case
+		else
+
+			xInt = (b2-b1)/(m1-m2)
+			yInt = m1*xInt+b1
+
+		end
 
 	end
 
@@ -158,13 +214,31 @@ function findIntersect(L1,L2)
 	intercept = {x=xInt,y=yInt}
 
 
-	if ( (xInt >= x1) and (xInt <= x2) and (xInt >= x3) and (xInt <= x4) ) then
+	--case for ends counting as intersection
+	if (endsCount) then
 
-		return true, intercept
+		if ( (xInt >= x1) and (xInt <= x2) and (xInt >= x3) and (xInt <= x4) ) then
 
+			return true, intercept
+
+		else
+
+			return false, intercept
+
+		end
+
+	--case for ends not counting as intersection
 	else
 
-		return false, intercept
+		if ( (xInt > x1) and (xInt < x2) and (xInt > x3) and (xInt < x4) ) then
+
+			return true, intercept
+
+		else
+
+			return false, intercept
+
+		end
 
 	end
 
