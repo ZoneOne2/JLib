@@ -1,4 +1,4 @@
-Transfer appropriate functions over from IFP
+Fix midpoint return to return {x=xm,y=ym} and fix any places it's called in JLib and IFP
 
 fix buttons using better constructor technique
 

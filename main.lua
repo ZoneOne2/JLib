@@ -122,6 +122,18 @@ function love.draw()
 			pointLine(t.angle)
 		 end
 
+		if (#t.polygon == 2 and #t.center == 2) then
+
+			pointLine({t.polygon[1],t.polygon[2]})
+			pointLine({t.center[1],t.center[2]})
+
+			--if (intTest) then
+				setHexColor(red)
+				lg.circle("fill",intPoint.x,intPoint.y,3)
+			--end
+
+		end
+
 		drawButtons()
 	
 	
@@ -142,6 +154,7 @@ function love.update(dt)
 	t3 = {}
 	t3[1] = {x=26,y=31}
 	
+	--[[
 	if (#t.angle==2) then
 		lineTest = {
 					{x=t.angle[1].x,y=t.angle[1].y},
@@ -149,7 +162,7 @@ function love.update(dt)
 					}
 		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
 	 else
-		print(fps,pointTypes[activePointType],mx,my)
+		print(fps,pointTypes[activePointType],mx,my,distToLine(t1[1],{t2[1],t3[1]}))
 	 end
 
 	testTable = {1,9,8,4,key1 = -100, key2 = (100*math.pi),0,2,4,-98.5}
@@ -157,6 +170,22 @@ function love.update(dt)
 	--print(tableMin(testTable))
 
 	dist({x=0,y=0},mouse)
+
+	]]
+
+
+	if (#t.polygon == 2 and #t.center == 2) then
+		testLine1 = {t.polygon[1],t.polygon[2]}
+		testLine2 = {t.center[1],t.center[2]}
+		intTest, intPoint = findIntersect(testLine1,testLine2)
+		print(fps,pointTypes[activePointType],mx,my,findIntersect(testLine1,testLine2))
+	
+	 else
+
+		print(fps,pointTypes[activePointType],mx,my)
+
+	 end
+
 
  end
 

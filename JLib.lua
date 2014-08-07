@@ -28,24 +28,146 @@ function jupdate(dt)
 
  end
 
-function findIntersect(L1,L2)
---WIP*
---FIX THIS.
-	L1.x1 = L1[1][1]
-	L1.y1 = L1[1][2]
-	L1.x2 = L1[2][1]
-	L1.y2 = L1[2][2]
+function findIntersect(L1,L2)	
+
+	local x1 = L1[1].x
+	local y1 = L1[1].y
+	local x2 = L1[2].x
+	local y2 = L1[2].y
+
+	--make sure point1 is always the bottom-leftmost point.
+	if (x2 < x1) then
+
+		x1 = L1[2].x
+		y1 = L1[2].y
+		x2 = L1[1].x
+		y2 = L1[1].y
+
+	 elseif (x2 == x1) then
+
+		if (y2 < y1) then
+
+			x1 = L1[2].x
+			y1 = L1[2].y
+			x2 = L1[1].x
+			y2 = L1[1].y
+
+		 end
+
+	 end
+
+	local m1 = findSlope({x=x1,y=y1},{x=x2,y=y2})
+	local b1 = y1-(m1*x1)
+
+
+
+	local x3 = L2[1].x
+	local y3 = L2[1].y
+	local x4 = L2[2].x
+	local y4 = L2[2].y
+
+	--make sure point1 is always the bottom-leftmost point.
+	if (x4 < x3) then
+
+		x3 = L2[2].x
+		y3 = L2[2].y
+		x4 = L2[1].x
+		y4 = L2[1].y
+
+	 elseif (x4 == x3) then
+
+		if (y4 < y3) then
+
+			x3 = L2[2].x
+			y3 = L2[2].y
+			x4 = L2[1].x
+			y4 = L2[1].y
+
+		 end
+
+	 end
+
+	local m2 = findSlope({x=x3,y=y3},{x=x4,y=y4})
+	local b2 = y3-(m2*x3)
+
+	local xInt,yInt,intercept
+
+
+	--speecial case if slope is the same
+	if (m1 == m2) then
+
+		if ( isOnLine({x=x1,y=y1},L2) ) then
+
+			print("same slope, intersection found (1)")
+			return true, {x=x1, y=y1}
+
+		elseif ( isOnLine({x=x2,y=y2},L2) ) then
+
+			print("same slope, intersection found (2)")
+			return true, {x=x2,y=y2}
+
+		else
+
+			print("same slope, no intersection found")
+			return false, {x=inf, y=inf}
+
+		 end
+
+	 end
+
 	
-	L2.x1 = L2[1][1]
-	L2.y1 = L2[1][2]
-	L2.x2 = L2[2][1]
-	L2.y2 = L2[2][2]
-	--check for horizontal/vertical lines
+	--special case for L1 = vertical line
+	if (m1 == "inf") then
 
-	L1.slope = findSlope({L1.x1,L1.y1},{L1.x2,L1.y2})
-	L2.slope = findSlope({L2.x1,L2.y1},{L2.x2,L2.y2})
+		if (x3<x1 and x4>x2) then
 
-	return L2.slope
+			xInt = x1
+			yInt = (m2*xInt)+b2
+
+		 else
+
+			print("m1 = infinite slope, no intersection found")
+			return false, {x=inf, y=inf}
+
+		 end
+
+	--special case for L2 = vertical line
+	elseif (m2 == "inf") then
+
+		if (x1<x3 and x2>x4) then
+
+			xInt = x3
+			yInt = (m1*xInt)+b1
+
+		 else
+
+			print("m2 = infinite slope, no intersection found")
+			return false, {x=inf, y=inf}
+
+		 end
+
+	--normal case
+	else
+
+		xInt = (b2-b1)/(m1-m2)
+		yInt = m1*xInt+b1
+
+	end
+
+	
+	intercept = {x=xInt,y=yInt}
+
+
+	if ( (xInt >= x1) and (xInt <= x2) and (xInt >= x3) and (xInt <= x4) ) then
+
+		return true, intercept
+
+	else
+
+		return false, intercept
+
+	end
+
 
  end
 
@@ -82,6 +204,7 @@ function findSlope(point1,point2)
 	--check if line is vertical
 	elseif (p1.x == p2.x) then
 	
+		print("vertical line found")
 		return "inf"
 	
 	 else
@@ -938,7 +1061,48 @@ function findAreaTriangle(point1,point2,point3)
 
  end
 
+--xq,yq are x and y for point in question (refPoint)
+--TODO: general function for rearranging points to go in order with bottom-leftmost first? (originated in isOnLine())
+		--DOESN'T WORK WELL FOR ANGLES > 90°
+function distToLine(refPoint,line)
 
+	local x1 = line[1].x
+	local y1 = line[1].y
+	local x2 = line[2].x
+	local y2 = line[2].y
+
+	local xq = refPoint.x
+	local yq = refPoint.y
+
+	
+	--make sure point1 is always the bottom-leftmost point.
+	if (x2 < x1) then
+
+		x1 = line[2].x
+		y1 = line[2].y
+		x2 = line[1].x
+		y2 = line[1].y
+
+	 elseif (x2 == x1) then
+
+		if (y2 < y1) then
+
+			x1 = line[2].x
+			y1 = line[2].y
+			x2 = line[1].x
+			y2 = line[1].y
+
+		 end
+
+	 end
+
+
+	local alpha = findAngle({x=xq,y=yq},{x=x1,y=y1},{x=x2,y=y2})
+	local b = dist({x=xq,y=yq},{x=x1,y=y1})
+
+	return b*math.sin(alpha)
+
+ end
 
 
 --

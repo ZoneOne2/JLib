@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"testL",
+				"testLine1"
+			],
+			[
+				"ac",
+				"activePointType"
+			],
+			[
 				"pol",
 				"polyTable"
 			]
@@ -23,7 +31,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 4382,
+				"buffer_size": 4997,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +39,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 14521,
+				"buffer_size": 17018,
 				"line_ending": "Windows"
 			}
 		}
@@ -82,6 +90,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"x",
+			"m1",
+			"line",
+			"y2",
+			"x2",
+			"y1",
+			"x1",
+			"1",
 			"listObj",
 			"lowKey",
 			"lowVal",
@@ -141,15 +157,15 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 4382,
+						"buffer_size": 4997,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2339,
-								2339
+								2250,
+								2250
 							]
 						],
 						"settings":
@@ -158,7 +174,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 336.0,
+						"translation.y": 1649.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -174,15 +190,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 14521,
+						"buffer_size": 17018,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12167,
-								12167
+								2497,
+								2497
 							]
 						],
 						"settings":
@@ -191,7 +207,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1141.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
