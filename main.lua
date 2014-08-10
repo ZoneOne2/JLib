@@ -122,17 +122,17 @@ function love.draw()
 			pointLine(t.angle)
 		 end
 
-		if (#t.polygon == 2 and #t.center == 2) then
+		--if (#t.polygon == 2 and #t.center == 2) then
 
-			pointLine({t.polygon[1],t.polygon[2]})
-			pointLine({t.center[1],t.center[2]})
+			pointLine(testLine1)
+			pointLine(testLine2)
 
 			--if (intTest) then
 				setHexColor(red)
 				lg.circle("fill",intPoint.x,intPoint.y,3)
 			--end
 
-		end
+		--end
 
 		drawButtons()
 	
@@ -174,17 +174,17 @@ function love.update(dt)
 	]]
 
 
-	if (#t.polygon == 2 and #t.center == 2) then
-		testLine1 = {t.polygon[1],t.polygon[2]}
-		testLine2 = {t.center[1],t.center[2]}
-		intTest, intPoint = findIntersect(testLine1,testLine2)
-		print(fps,pointTypes[activePointType],mx,my,findIntersect(testLine1,testLine2))
+	--if (#t.polygon == 2 and #t.center == 2) then
+		testLine1 = {{x=228,y=131},{x=-27,y=100}}
+		testLine2 = {{x=-27,y=230},{x=202,y=-145}}
+		intTest, intPoint = findIntersect(testLine1,testLine2,false)
+		print(fps,pointTypes[activePointType],mx,my,intTest,intPoint.x,intPoint.y)
 	
-	 else
+	-- else
 
-		print(fps,pointTypes[activePointType],mx,my)
+		--print(fps,pointTypes[activePointType],mx,my)
 
-	 end
+	-- end
 
 
  end

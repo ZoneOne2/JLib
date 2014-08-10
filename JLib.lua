@@ -28,16 +28,12 @@ function jupdate(dt)
 
  end
 
-function findIntersect(L1,L2,endsCount)	
+function findIntersect(L1,L2,ends)	
 
-	if(endsCount == nil) then
+	if(ends == nil) then
 		endsCount = true
-	end
-
-	if (endsCount) then
-		print("endsCounted")
 	else
-		print("endsNotCounted")
+		endsCount = ends
 	end
 
 	local x1 = L1[1].x
@@ -210,6 +206,25 @@ function findIntersect(L1,L2,endsCount)
 
 	end
 
+	--stupid possible floating point error correction
+	if (percentError(x1,xInt)<1e-5) then
+		xInt = x1
+	 elseif (percentError(x2,xInt)<1e-5) then
+		xInt = x2
+	 elseif (percentError(x3,xInt)<1e-5) then
+		xInt = x3	
+	 elseif (percentError(x4,xInt)<1e-5) then
+		xInt = x4
+	 end
+	if (percentError(y1,yInt)<1e-5) then
+		yInt = y1
+	 elseif (percentError(y2,yInt)<1e-5) then
+		yInt = y2
+	 elseif (percentError(y3,yInt)<1e-5) then
+		yInt = y3	
+	 elseif (percentError(y4,yInt)<1e-5) then
+		yInt = y4
+	 end
 	
 	intercept = {x=xInt,y=yInt}
 
@@ -230,8 +245,9 @@ function findIntersect(L1,L2,endsCount)
 	--case for ends not counting as intersection
 	else
 
-		if ( (xInt > x1) and (xInt < x2) and (xInt > x3) and (xInt < x4) ) then
 
+		if ( (xInt > x1) and (xInt < x2) and (xInt > x3) and (xInt < x4) ) then
+			print((xInt>x1),"xint",xInt,"x1,x2",x1,x2,"x3,x4",x3,x4)
 			return true, intercept
 
 		else
@@ -692,7 +708,7 @@ function isOnLine(refPoint,line)
 
 function percentError(expected,obtained)
 
-	return (math.abs(expected-obtained)/(expected))*100
+	return math.abs(((expected-obtained)/(expected))*100)
 
  end
 
