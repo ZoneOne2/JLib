@@ -1,6 +1,8 @@
 function love.load()
 
 	require "JLib"
+
+	mode = "none"
 	
 	init()
 	
@@ -136,6 +138,20 @@ function love.draw()
 
 		drawButtons()
 	
+		if (mode == "text") then
+
+			local textWidth = defaultFont:getWidth(userInput[activeText])
+			local textHeight = defaultFont:getHeight(userInput[activeText])
+
+			setHexColor(white)
+			lg.rectangle("fill",textX-1,textY+1,textWidth+2,-textHeight-2)
+			setHexColor(black)
+			lg.rectangle("line",textX-1,textY+1,textWidth+2,-textHeight-2)
+
+			setHexColor(cerulean)
+			drawText(userInput[activeText],textX,textY)
+
+		 end
 	
 	 lg.pop()
 
@@ -178,7 +194,7 @@ function love.update(dt)
 		testLine1 = {{x=228,y=131},{x=-27,y=100}}
 		testLine2 = {{x=-27,y=230},{x=202,y=-145}}
 		intTest, intPoint = findIntersect(testLine1,testLine2,false)
-		print(fps,pointTypes[activePointType],mx,my,intTest,intPoint.x,intPoint.y)
+		print(fps,pointTypes[activePointType],mx,my,mode,love.keyboard.isDown("capslock"))
 	
 	-- else
 
@@ -193,19 +209,51 @@ function love.focus(bool)
 
  end
 
+function love.textinput(t)
+
+	userInput[activeText] = userInput[activeText]..t
+
+end
+
 function love.keypressed( key, unicode )
 
-	if key == "tab" then
+	if (mode == "text") then
 
-		activePointType = advCirc(activePointType,1,#pointTypes)
+		if key == "backspace" then
+
+			userInput[activeText] = string.sub(userInput[activeText],1,-2)
+
+		 elseif (key == "kpenter") or (key == "return") then
+
+		 	mode = prevMode
+		 	prevMode = ""
+		 	love.keyboard.setTextInput(false)
+		 	activeText = ""
+
+		 end
+	 
+
+
+	 else
+
+
+
+		if key == "tab" then
+
+			activePointType = advCirc(activePointType,1,#pointTypes)
+
+		 end
+
+		if key == "`" then
+
+			debug.debug()
+
+		 end
+
 
 	 end
 
-	if key == "`" then
 
-		debug.debug()
-
-	 end
 
  end
 
@@ -228,6 +276,13 @@ function love.mousepressed( x, y, button )
 		forRemove = findClosestPoint({mx,my},t.polygon,t.angle,t.center)
 		table.remove(forRemove[1],forRemove[2])
 	
+	 end
+
+
+	if button == "m" then
+
+		textInput("testField",mx,my)
+
 	 end
 
  end
