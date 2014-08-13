@@ -76,6 +76,8 @@ function love.draw()
 		lg.scale(1,-1)
 		lg.translate(window.width/2,-window.height/2)
 
+		lg.translate(zoomOffsetX,zoomOffsetY)
+		lg.scale(zoomLevel)
 		
 		drawGrid(50)
 
@@ -217,6 +219,8 @@ end
 
 function love.keypressed( key, unicode )
 
+
+
 	if (mode == "text") then
 
 		if key == "backspace" then
@@ -263,6 +267,30 @@ function love.keyreleased( key, unicode )
 
 function love.mousepressed( x, y, button )
 	
+	
+	if (button == "wu") then
+
+		zoom(1.5)
+
+	 end
+
+	if (button == "wd") then
+
+		zoom((1/1.5))
+
+	 end
+
+
+
+
+
+
+
+
+
+
+
+
 	if button == "l" then
 	
 		table.insert(t[pointTypes[activePointType]],{x=mx, y=my})
