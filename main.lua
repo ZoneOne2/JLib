@@ -1,8 +1,6 @@
 function love.load()
 
 	require "JLib"
-
-	mode = "none"
 	
 	init()
 	
@@ -140,7 +138,7 @@ function love.draw()
 
 		drawButtons()
 	
-		if (mode == "text") then
+		if (hasTextInput) then
 
 			local textWidth = defaultFont:getWidth(userInput[activeText])
 			local textHeight = defaultFont:getHeight(userInput[activeText])
@@ -204,6 +202,8 @@ function love.update(dt)
 
 	-- end
 
+	testTablezzz = {2,4,key1 = "test",5}
+
 
  end
 
@@ -221,7 +221,8 @@ function love.keypressed( key, unicode )
 
 
 
-	if (mode == "text") then
+	if (hasTextInput) then
+
 
 		if key == "backspace" then
 
@@ -229,16 +230,14 @@ function love.keypressed( key, unicode )
 
 		 elseif (key == "kpenter") or (key == "return") then
 
-		 	mode = prevMode
-		 	prevMode = ""
 		 	love.keyboard.setTextInput(false)
+		 	hasTextInput = false
 		 	activeText = ""
 
 		 end
 	 
 
-
-	 else
+	else
 
 
 

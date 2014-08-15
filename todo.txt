@@ -1,4 +1,4 @@
-Check documentation to make sure config and main files are up to date
+don't return findClosestPoint() with a table. Just use multiple return
 
 textInput function
 Fix midpoint return to return {x=xm,y=ym} and fix any places it's called in JLib and IFP
@@ -7,9 +7,5 @@ possible infinity case in denominator of percentError()
 
 fix buttons using better constructor technique
 
-Add left/right/middle buttons to mousepress in JLib template
-Add modes to JLib template
-Add textInput to JLib template
-Add zoom stuff to JLib template
 
-re-fix all code folding. (remove spaces)
+re-fix all code folding. (remove spaces) No?
