@@ -35,7 +35,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 6068,
+				"buffer_size": 6277,
 				"line_ending": "Windows"
 			}
 		},
@@ -43,7 +43,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 19805,
+				"buffer_size": 19824,
 				"line_ending": "Windows"
 			}
 		}
@@ -51,11 +51,15 @@
 	"build_system": "Packages/User/Love2D.sublime-build",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 311.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			]
 		],
-		"width": 0.0
+		"width": 400.0
 	},
 	"console":
 	{
@@ -72,7 +76,11 @@
 	},
 	"file_history":
 	[
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Lua Love/LuaLove.sublime-settings",
 		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/JLib.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/main.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/conf.lua",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Lua Love/Lua/math.sin.sublime-snippet",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/Love2D.sublime-build",
@@ -150,13 +158,13 @@
 						"selection":
 						[
 							[
-								1143,
-								1143
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"syntax": "Packages/Lua Dev/Lua.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -171,24 +179,24 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 6068,
+						"buffer_size": 6277,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3998,
-								3998
+								4724,
+								4724
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"syntax": "Packages/Lua Dev/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2670.0,
+						"translation.y": 3981.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -204,15 +212,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 19805,
+						"buffer_size": 19824,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								385,
-								385
+								12611,
+								12611
 							]
 						],
 						"settings":
@@ -221,7 +229,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2753.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -257,7 +265,7 @@
 		"cols":
 		[
 			0.0,
-			0.403595309655,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -296,6 +304,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 94.0,
+	"side_bar_width": 61.0,
 	"status_bar_visible": true
 }

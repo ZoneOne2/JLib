@@ -349,10 +349,21 @@ function setButtons()
 	--mouseOverText: text to display on mouseover if mouse-over is true
 	--action: function to execute upon click
 	
-	createButton("Test Button R",testFunc,"rectangle",0,0,100,30)
-	buttons[#buttons].color = lime
-	buttons[#buttons].image = love.graphics.newImage("test.png")
-	buttons[#buttons].bounds = getButtonBounds(buttons[#buttons])
+	buttons[1] = Button:new{
+
+		text = "Test Button R",
+		action = testFunc,
+		x=0, y=0,
+		width = 100, height = 30,
+		backgroundColor = lime,
+		textColor = red,
+		--image = lg.newImage("test.png")
+
+	 }
+	--(createButton("Test Button R",testFunc,"rectangle",0,0,100,30)
+	--buttons[#buttons].color = lime
+	--buttons[#buttons].image = love.graphics.newImage("test.png")
+	--buttons[#buttons].bounds = getButtonBounds(buttons[#buttons])
 
 	--100x30
 	

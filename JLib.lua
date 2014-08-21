@@ -1,6 +1,6 @@
 
 function init()
-
+	nameColors()
 	lg = love.graphics
 
 	defaultFont = love.graphics.newFont(12)
@@ -14,7 +14,36 @@ function init()
 
 	userInput = {}
 
-	nameColors()
+	Button = {
+
+		id = 0,
+		name = "untitled",
+		text = "button",
+		image = nil,
+		backgroundColor = white,
+		textColor = black,
+		x = 0,
+		y = 0,
+		width = 100,
+		height = 50,
+		action = nil,
+
+	 }
+	function Button:new(o)
+
+		o = o or {}
+		setmetatable(o, self)
+		self.__index = self
+
+		o.bounds = getButtonBounds(o)
+
+		return o
+
+	 end
+
+	buttons = {}
+
+	
 	
 	setButtons()
 
@@ -781,20 +810,16 @@ function getButtonBounds(button)
 	local p3 = {}
 	local p4 = {}
 
-	if (button.shape == "rectangle") then
+	p2 = {x=(button.x+button.width),y=(button.y)}
+	p3 = {x=(button.x+button.width),y=(button.y-button.height)}
+	p4 = {x=(button.x),y=(button.y-button.height)}
 
-		p2 = {x=(button.x+button.width),y=(button.y)}
-		p3 = {x=(button.x+button.width),y=(button.y-button.height)}
-		p4 = {x=(button.x),y=(button.y-button.height)}
-
-		return {p1,p2,p3,p4}
-
-	 end
+	return {p1,p2,p3,p4}
 
  end
 
 --...: x,y of top-left corner for rectangle
-function createButton(text,action,shape,...)
+--[[function createButton(text,action,shape,...)
 	local arg = {...}
 	
 	buttons[#buttons+1] = {
@@ -828,7 +853,7 @@ function createButton(text,action,shape,...)
 	 end
 
  end
-
+]]
 function drawButtons()
 --TODO: mouse-over text
 --		add shape for image
@@ -842,39 +867,24 @@ function drawButtons()
 			local textWidth = defaultFont:getWidth(button.text)
 			local textHeight = defaultFont:getHeight(button.text)
 
-			setHexColor(button.color)
+			setHexColor(button.backgroundColor)
 
-			if (button.shape == "rectangle") then
+			if (button.image ~= nil) then
 
-				if (button.image ~= nil) then
+				button.width = button.image:getWidth()
+				button.height = button.image:getHeight()
 
-					button.width = button.image:getWidth()
-					button.height = button.image:getHeight()
+				setHexColor(white)
+				lg.draw(button.image,0,0)
 
-					setHexColor(white)
-					lg.draw(button.image,0,0)
+			else
 
-				else
-
-					lg.rectangle("fill",0,0,button.width,button.height)
-
-				 end
-
-				setHexColor(black)
-				lg.print(button.text,(button.width/2)-(textWidth/2),(button.height/2)-(textHeight/2))
-
-			elseif (button.shape == "circle") then
-
-				lg.circle("fill",0,0,button.radius)
-
-				setHexColor(black)
-				lg.print(button.text,button.radius+5,-(textHeight/2))
-
-			elseif (button.shape == "polygon") then
-
-				pointPolygon("fill",button.p)
+				lg.rectangle("fill",0,0,button.width,button.height)
 
 			 end
+
+			setHexColor(button.textColor)
+			lg.print(button.text,(button.width/2)-(textWidth/2),(button.height/2)-(textHeight/2))
 		
 		 lg.pop()
 	
