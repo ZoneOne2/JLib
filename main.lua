@@ -24,7 +24,7 @@ function love.load()
 	colorFind.G.center = 0
 	colorFind.B.center = 255
 
-	testAudio = love.audio.newSource("GoodMorningTucson.mp3")
+	testAudio = love.audio.newSource("test.mp3")
 	
 	
 	t = {}
