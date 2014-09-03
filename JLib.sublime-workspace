@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"if",
+				"ifkey	ifkeyLua"
+			],
+			[
 				"mx",
 				"mx"
 			],
@@ -35,7 +39,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 6277,
+				"buffer_size": 7592,
 				"line_ending": "Windows"
 			}
 		},
@@ -43,7 +47,23 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 19824,
+				"buffer_size": 20551,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "keys.lua",
+			"settings":
+			{
+				"buffer_size": 444,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "buttons.lua",
+			"settings":
+			{
+				"buffer_size": 1676,
 				"line_ending": "Windows"
 			}
 		}
@@ -51,7 +71,7 @@
 	"build_system": "Packages/User/Love2D.sublime-build",
 	"command_palette":
 	{
-		"height": 311.0,
+		"height": 196.0,
 		"selected_items":
 		[
 			[
@@ -59,7 +79,7 @@
 				"Package Control: Remove Package"
 			]
 		],
-		"width": 400.0
+		"width": 340.0
 	},
 	"console":
 	{
@@ -76,10 +96,19 @@
 	},
 	"file_history":
 	[
-		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Lua Love/LuaLove.sublime-settings",
-		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/JLib.lua",
-		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/main.lua",
 		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/conf.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/main.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/keys.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/buttons.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/JLib.lua",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/elseifLua.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/ifkeyLua.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/elseLua.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/forivLua.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/doLua.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/ifLua.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/foriv.sublime-snippet",
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Lua Love/LuaLove.sublime-settings",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Lua Love/Lua/math.sin.sublime-snippet",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
@@ -102,6 +131,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"x",
+			"5",
+			"15",
+			"10",
+			"5",
+			"2",
 			"TextInput",
 			"textinput",
 			"textInput",
@@ -164,7 +199,7 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua Dev/Lua.tmLanguage",
+							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -179,24 +214,24 @@
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 6277,
+						"buffer_size": 7592,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4724,
-								4724
+								1621,
+								1621
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua Dev/Lua.tmLanguage",
+							"syntax": "Packages/Lua/Lua.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4176.0,
+						"translation.y": 1208.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -212,15 +247,15 @@
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 19824,
+						"buffer_size": 20551,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12611,
-								12611
+								16351,
+								16351
 							]
 						],
 						"settings":
@@ -229,7 +264,61 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2753.0,
+						"translation.y": 1065.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "keys.lua",
+					"settings":
+					{
+						"buffer_size": 444,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "buttons.lua",
+					"settings":
+					{
+						"buffer_size": 1676,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -265,7 +354,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.519690576653,
 			1.0
 		],
 		"rows":
@@ -304,6 +393,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 61.0,
+	"side_bar_width": 81.0,
 	"status_bar_visible": true
 }

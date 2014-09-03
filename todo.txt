@@ -1,3 +1,17 @@
+button font handling (getCurrentFont()?)
+better text centering (see LD30)
+draw arrow
+
+add more colors
+	gold,silver,bronze,platinum,honolulu blue,hogwarts houses
+
+transfer applicable functions from LD30
+
+
+axes deadzone variable. (don't do deadzones on triggers?)
+
+snippets for all JLib functions
+
 don't return findClosestPoint() with a table. Just use multiple return
 
 textInput function

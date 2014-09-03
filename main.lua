@@ -1,7 +1,15 @@
 function love.load()
 
 	require "JLib"
+	require "keys"
+	require "buttons"
 	
+	
+
+
+
+
+
 	init()
 	
 	pointTypes = {"polygon", "angle", "center"}
@@ -83,7 +91,6 @@ function love.draw()
 		
 		lg.setLineWidth(1)
 
-		
 		lg.setColor(255,0,0)
 		lg.circle("fill",0,0,10)
 		
@@ -93,7 +100,8 @@ function love.draw()
 		lg.setColor(0,0,255)
 		lg.circle("fill",100,100,10)
 
-		lg.setColor(255,0,255)
+		setHexColor(purple)
+		--lg.setColor(255,0,255)
 		lg.circle("fill",0,100,10)
 		
 	
@@ -136,7 +144,34 @@ function love.draw()
 
 		--end
 
-		drawButtons()
+		
+		
+		lg.circle("fill",0,0,5)
+		
+		setHexColor(white)
+		pointPolygon("fill",wall[1])
+		--[[
+		lg.push()
+		lg.translate(player.x,player.y)
+
+		setHexColor(white)
+		
+		setHexColor(cerulean)
+		lg.rectangle("fill",-10,-10,player.width,player.height)
+		for i, point in pairs(player.bounds) do
+			setHexColor(red)
+			lg.circle("fill",point.x,point.y,1)
+		end
+		lg.pop()
+
+		for i, axis in pairs(axes[1]) do
+			setHexColor(cerulean)
+			drawText(i.."\t"..axis,-300,200-15*i)
+		
+		 end
+		]]
+
+		--drawButtons()
 	
 		if (hasTextInput) then
 
@@ -158,9 +193,49 @@ function love.draw()
  end
 
 function love.update(dt)
-	
 	jupdate(dt)
+
+
 	
+	--[[
+	player.vx = (player.speed*axes[1][1])
+
+	player.onGround = false
+	
+	player.x = player.x + (player.vx*dt)
+	player.y = player.y + (player.vy*dt)
+
+	player.vx = player.vx + (player.ax*dt)
+	player.vy = player.vy + (player.ay*dt)
+
+
+	for i, point in pairs(player.bounds) do
+
+		if ( isInside({x=point.x+player.x,y=point.y+player.y},wall[1]) ) then
+
+			player.ay = 0
+			player.vy = 0
+			player.y = wall[1][1].y+10
+			player.onGround = true
+
+		 end
+
+	 end
+
+	if not player.onGround then
+
+		player.ay = -player.gravity
+
+	end
+
+
+	]]
+
+
+
+
+
+
 	allPoints = mergeTables(t.polygon,t.angle,t.center)
 
 	t1 = {}
@@ -170,7 +245,7 @@ function love.update(dt)
 	t3 = {}
 	t3[1] = {x=26,y=31}
 	
-	--[[
+	
 	if (#t.angle==2) then
 		lineTest = {
 					{x=t.angle[1].x,y=t.angle[1].y},
@@ -187,14 +262,14 @@ function love.update(dt)
 
 	dist({x=0,y=0},mouse)
 
-	]]
+
 
 
 	--if (#t.polygon == 2 and #t.center == 2) then
 		testLine1 = {{x=228,y=131},{x=-27,y=100}}
 		testLine2 = {{x=-27,y=230},{x=202,y=-145}}
 		intTest, intPoint = findIntersect(testLine1,testLine2,false)
-		print(fps,pointTypes[activePointType],mx,my,mode,love.keyboard.isDown("capslock"))
+		--print(fps,pointTypes[activePointType],mx,my,mode,isInside(t1[1],wall[1]))
 	
 	-- else
 
@@ -203,6 +278,8 @@ function love.update(dt)
 	-- end
 
 	testTablezzz = {2,4,key1 = "test",5}
+
+	print(fps,player.onGround)
 
 
  end
@@ -216,6 +293,18 @@ function love.textinput(t)
 	userInput[activeText] = userInput[activeText]..t
 
 end
+
+function love.gamepadpressed( joystick, button )
+
+	buttonPressed(joystick,button)
+
+ end
+
+function love.gamepadreleased( joystick, button)
+
+	buttonReleased(joystick,button)
+
+ end
 
 function love.keypressed( key, unicode )
 
@@ -254,6 +343,9 @@ function love.keypressed( key, unicode )
 		 end
 
 
+		keyPressed(key,unicode)
+
+
 	 end
 
 
@@ -261,6 +353,8 @@ function love.keypressed( key, unicode )
  end
 
 function love.keyreleased( key, unicode )
+
+	keyReleased(key,unicode)
 
  end
 

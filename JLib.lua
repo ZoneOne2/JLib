@@ -3,6 +3,15 @@ function init()
 	nameColors()
 	lg = love.graphics
 
+	joysticks = love.joystick.getJoysticks()
+	axes = {}
+
+	for i, joystick in pairs(joysticks) do
+	
+		axes[i] = {}
+	
+	 end
+
 	defaultFont = love.graphics.newFont(12)
 	smallFont = love.graphics.newFont(10)
 	smallestFont = love.graphics.newFont(8)
@@ -43,7 +52,28 @@ function init()
 
 	buttons = {}
 
-	
+	player = {
+
+		x = -100,
+		y = 50,
+		width = 20,
+		height = 20,
+		bounds = { {x=-10,y=10},{x=10,y=10},{x=10,y=-10},{x=-10,y=-10} },
+		ax = 0,
+		ay = 0,
+		vx = 0,
+		vy=0,
+		speed = 100,
+		onGround = false,
+		gravity = 250
+
+	 }
+
+	wall = {
+
+		{ {x=-500,y=10},{x=500,y=10},{x=500,y=-10},{x=-500,y=-10} }
+
+	}
 	
 	setButtons()
 
@@ -52,6 +82,7 @@ function init()
 	zoomOffsetY = 0
 
 	hasTextInput = false
+	love.keyboard.setTextInput(false)
 
 	mode = "none"
 
@@ -62,6 +93,26 @@ function jupdate(dt)
 	fps = math.floor(1/dt)
 
 	updateCursor()
+
+	for i, joystick in pairs(joysticks) do
+	
+		axes[i] = {joystick:getAxes()}
+
+		for j, axis in pairs(axes[i]) do
+	
+			if (math.abs(axis)<0.3) then
+			
+				axes[i][j] = 0
+			
+			 end
+	
+		 end
+	
+	 end
+
+	--axes = {joysticks[1]:getAxes()}
+
+	
 
  end
 
@@ -985,11 +1036,13 @@ function nameColors()
 
  end
 
-function setHexColor(hexColor)
+function setHexColor(hexColor,alpha)
 
 	local RGB = HEXtoRGB(hexColor)
 
-	lg.setColor(RGB[1],RGB[2],RGB[3])
+	local a = alpha or 255
+
+	lg.setColor(RGB[1],RGB[2],RGB[3],a)
 
  end
 
