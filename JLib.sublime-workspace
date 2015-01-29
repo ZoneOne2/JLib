@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"love",
+				"love.graphics.arc	Love2Darc"
+			],
+			[
+				"vel",
+				"vel_y"
+			],
+			[
+				"textur",
+				"texture_coords"
+			],
+			[
 				"if",
 				"ifkey	ifkeyLua"
 			],
@@ -28,18 +40,13 @@
 	"buffers":
 	[
 		{
-			"file": "conf.lua",
-			"settings":
-			{
-				"buffer_size": 1566,
-				"line_ending": "Windows"
-			}
-		},
-		{
+			"contents": "function love.load()\n\n	require \"JLib\"\n	require \"keys\"\n	require \"buttons\"\n	\n	\n\n\n\n\n\n	init()\n	\n	pointTypes = {\"polygon\", \"angle\", \"center\"}\n	activePointType = 1\n	\n	colorFind = {}\n	colorFind.R = {}\n	colorFind.G = {}\n	colorFind.B = {}\n	\n	colorFind.R.polygon = 255\n	colorFind.G.polygon = 0\n	colorFind.B.polygon = 0\n	\n	colorFind.R.angle = 0\n	colorFind.G.angle = 255\n	colorFind.B.angle = 0\n	\n	colorFind.R.center = 0\n	colorFind.G.center = 0\n	colorFind.B.center = 255\n\n	testAudio = love.audio.newSource(\"test.mp3\")\n	testImage = love.graphics.newImage(\"test.png\")\n	\n	t = {}\n	t.polygon = {}\n	t.angle = {}\n	t.center = {}\n\n\n	TestObj = {\n				id = 0,\n				testField = 0,\n			 }\n	function TestObj:new(o)\n\n		totalTestObjs = totalTestObjs+1\n\n		o = o or {}\n		setmetatable(o, self)\n		self.__index = self\n		o.id = #testObjs+1\n		return o\n\n	 end\n	totalTestObjs = 0\n\n\n\n	testObjs = {}\n\n	table.insert(testObjs,TestObj:new{testField = 18})\n	table.insert(testObjs,TestObj:new{testField = 7})\n	table.insert(testObjs,TestObj:new{testField = -78})\n	table.insert(testObjs,TestObj:new{testField = 0})\n	table.insert(testObjs,TestObj:new{testField = math.pi})\n	table.insert(testObjs,TestObj:new{testField = 720})\n	table.insert(testObjs,TestObj:new{testField = -18.9})\n	table.insert(testObjs,TestObj:new{testField = 8.6})\n\n end\n\nfunction love.draw()\n\n	lg.push()\n	\n		\n	\n		--lg.scale(1,-1)\n		--lg.translate(window.width/2,-window.height/2)\n\n		lg.translate(zoomOffsetX,zoomOffsetY)\n		lg.scale(zoomLevel)\n		\n		drawGrid(50)\n\n		\n		\n		lg.setLineWidth(1)\n\n		lg.setColor(255,0,0)\n		lg.circle(\"fill\",0,0,10)\n		\n		lg.setColor(0,255,0)\n		lg.circle(\"fill\",100,0,10)\n		\n		lg.setColor(0,0,255)\n		lg.circle(\"fill\",100,100,10)\n\n		setHexColor(purple)\n		--lg.setColor(255,0,255)\n		lg.circle(\"fill\",0,100,10)\n		\n	\n		lg.setColor(0,255,0)\n		pointLine(t1,t2)\n		pointLine(t2,t3)\n		\n		lg.setColor(255,0,0)\n		--pointPolygon(\"line\",t1,t2,t3)\n		\n		for i, typeOfPoint in pairs(t) do\n		\n			setColorFind(i)\n			for j, point in pairs(typeOfPoint) do\n			\n				lg.circle(\"fill\",point.x,point.y,1)\n				\n			 end\n			\n		 end\n		\n		if (#t.polygon>2) then\n			pointPolygon(\"line\",t.polygon)\n			print(findAreaTriangle(t.polygon[1],t.polygon[2],t.polygon[3]))\n		 end\n		\n		if (#t.angle==2) then\n			pointLine(t.angle)\n		 end\n\n		--if (#t.polygon == 2 and #t.center == 2) then\n\n			pointLine(testLine1)\n			pointLine(testLine2)\n\n			--if (intTest) then\n				setHexColor(red)\n				lg.circle(\"fill\",intPoint.x,intPoint.y,3)\n			--end\n\n		--end\n\n		\n		\n		lg.circle(\"fill\",0,0,5)\n		\n		setHexColor(white)\n		pointPolygon(\"fill\",wall[1])\n		--[[\n		lg.push()\n		lg.translate(player.x,player.y)\n\n		setHexColor(white)\n		\n		setHexColor(cerulean)\n		lg.rectangle(\"fill\",-10,-10,player.width,player.height)\n		for i, point in pairs(player.bounds) do\n			setHexColor(red)\n			lg.circle(\"fill\",point.x,point.y,1)\n		end\n		lg.pop()\n\n		for i, axis in pairs(axes[1]) do\n			setHexColor(cerulean)\n			drawText(i..\"\\t\"..axis,-300,200-15*i)\n		\n		 end\n		]]\n\n		--drawButtons()\n	\n		if (hasTextInput) then\n\n			local textWidth = defaultFont:getWidth(userInput[activeText])\n			local textHeight = defaultFont:getHeight(userInput[activeText])\n\n			setHexColor(white)\n			lg.rectangle(\"fill\",textX-1,textY+1,textWidth+2,-textHeight-2)\n			setHexColor(black)\n			lg.rectangle(\"line\",textX-1,textY+1,textWidth+2,-textHeight-2)\n\n			setHexColor(cerulean)\n			drawText(userInput[activeText],textX,textY)\n\n		 end\n	\n	 lg.pop()\n\n end\n\nfunction love.update(dt)\n	jupdate(dt)\n\n\n	\n	--[[\n	player.vx = (player.speed*axes[1][1])\n\n	player.onGround = false\n	\n	player.x = player.x + (player.vx*dt)\n	player.y = player.y + (player.vy*dt)\n\n	player.vx = player.vx + (player.ax*dt)\n	player.vy = player.vy + (player.ay*dt)\n\n\n	for i, point in pairs(player.bounds) do\n\n		if ( isInside({x=point.x+player.x,y=point.y+player.y},wall[1]) ) then\n\n			player.ay = 0\n			player.vy = 0\n			player.y = wall[1][1].y+10\n			player.onGround = true\n\n		 end\n\n	 end\n\n	if not player.onGround then\n\n		player.ay = -player.gravity\n\n	end\n\n\n	]]\n\n\n\n\n\n\n	allPoints = mergeTables(t.polygon,t.angle,t.center)\n\n	t1 = {}\n	t1[1] = {x=mx,y=my}\n	t2 = {}\n	t2[1] = {x=97,y=5}\n	t3 = {}\n	t3[1] = {x=26,y=31}\n	\n	\n	if (#t.angle==2) then\n		lineTest = {\n					{x=t.angle[1].x,y=t.angle[1].y},\n					{x=t.angle[2].x,y=t.angle[2].y}\n					}\n		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))\n	 else\n		print(fps,pointTypes[activePointType],mx,my,distToLine(t1[1],{t2[1],t3[1]}))\n	 end\n\n	testTable = {1,9,8,4,key1 = -100, key2 = (100*math.pi),0,2,4,-98.5}\n\n	--print(tableMin(testTable))\n\n	dist({x=0,y=0},mouse)\n\n\n\n\n	--if (#t.polygon == 2 and #t.center == 2) then\n		testLine1 = {{x=228,y=131},{x=-27,y=100}}\n		testLine2 = {{x=-27,y=230},{x=202,y=-145}}\n		intTest, intPoint = findIntersect(testLine1,testLine2,false)\n		--print(fps,pointTypes[activePointType],mx,my,mode,isInside(t1[1],wall[1]))\n	\n	-- else\n\n		--print(fps,pointTypes[activePointType],mx,my)\n\n	-- end\n\n	testTablezzz = {2,4,key1 = \"test\",5}\n\n	print(fps,player.onGround)\n\n\n end\n\nfunction love.focus(bool)\n\n end\n\nfunction love.textinput(t)\n\n	userInput[activeText] = userInput[activeText]..t\n\nend\n\nfunction love.gamepadpressed( joystick, button )\n\n	buttonPressed(joystick,button)\n\n end\n\nfunction love.gamepadreleased( joystick, button)\n\n	buttonReleased(joystick,button)\n\n end\n\nfunction love.keypressed( key, unicode )\n\n\n\n	if (hasTextInput) then\n\n\n		if key == \"backspace\" then\n\n			userInput[activeText] = string.sub(userInput[activeText],1,-2)\n\n		 elseif (key == \"kpenter\") or (key == \"return\") then\n\n		 	love.keyboard.setTextInput(false)\n		 	hasTextInput = false\n		 	activeText = \"\"\n\n		 end\n	 \n\n	else\n\n\n\n		if key == \"tab\" then\n\n			activePointType = advCirc(activePointType,1,#pointTypes)\n\n		 end\n\n		if key == \"`\" then\n\n			debug.debug()\n\n		 end\n\n\n		keyPressed(key,unicode)\n\n\n	 end\n\n\n\n end\n\nfunction love.keyreleased( key, unicode )\n\n	keyReleased(key,unicode)\n\n end\n\nfunction love.mousepressed( x, y, button )\n	\n	\n	if (button == \"wu\") then\n\n		zoom(1.5)\n\n	 end\n\n	if (button == \"wd\") then\n\n		zoom((1/1.5))\n\n	 end\n\n\n\n\n\n\n\n\n\n\n\n\n	if button == \"l\" then\n	\n		table.insert(t[pointTypes[activePointType]],{x=mx, y=my})\n\n		checkButtonPress()\n	\n	 end\n	\n	if button == \"r\" then\n		--TODO: only works if at least one polygon point exists, why?\n		forRemove = findClosestPoint({mx,my},t.polygon,t.angle,t.center)\n		table.remove(forRemove[1],forRemove[2])\n	\n	 end\n\n\n	if button == \"m\" then\n\n		textInput(\"testField\",mx,my)\n\n	 end\n\n end\n\nfunction love.mousereleased( x, y, button )\n\n end\n\nfunction love.quit()\n\n end\n\n\nfunction setButtons()\n\n\n	buttons = {}\n	\n	--shape: rectangle, circle, or polygon\n		--rectangle:\n			--x: top-left corner x-coordinate\n			--y: top-left corner y-coordinate\n			--width: button width\n			--height: button height\n		--circle:\n			--x: center x-coordinate\n			--y: center y-coordinate\n			--width: button radius\n		--polygon:\n			--p: table containing points\n				--p[1]: x\n				--p[2]: y\n	--color: color of button\n	--image: image of button (if one exists)\n	--text: text to display on button\n	--mouseOver: true/false for mouseover text\n	--mouseOverText: text to display on mouseover if mouse-over is true\n	--action: function to execute upon click\n	\n	buttons[1] = Button:new{\n\n		text = \"Test Button R\",\n		action = testFunc,\n		x=0, y=0,\n		width = 100, height = 30,\n		backgroundColor = lime,\n		textColor = red,\n		--image = lg.newImage(\"test.png\")\n\n	 }\n	--(createButton(\"Test Button R\",testFunc,\"rectangle\",0,0,100,30)\n	--buttons[#buttons].color = lime\n	--buttons[#buttons].image = love.graphics.newImage(\"test.png\")\n	--buttons[#buttons].bounds = getButtonBounds(buttons[#buttons])\n\n	--100x30\n	\n	--createButton(\"Test Button C\",nil,\"circle\",8,8,7)\n	--buttons[#buttons].color = cerulean\n	\n\n end",
 			"file": "main.lua",
+			"file_size": 8059,
+			"file_write_time": 130541803819592308,
 			"settings":
 			{
-				"buffer_size": 7592,
+				"buffer_size": 7642,
 				"line_ending": "Windows"
 			}
 		},
@@ -47,15 +54,7 @@
 			"file": "JLib.lua",
 			"settings":
 			{
-				"buffer_size": 20551,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "keys.lua",
-			"settings":
-			{
-				"buffer_size": 444,
+				"buffer_size": 20925,
 				"line_ending": "Windows"
 			}
 		},
@@ -66,12 +65,20 @@
 				"buffer_size": 1676,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "keys.lua",
+			"settings":
+			{
+				"buffer_size": 444,
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "Packages/User/Love2D.sublime-build",
 	"command_palette":
 	{
-		"height": 196.0,
+		"height": 392.0,
 		"selected_items":
 		[
 			[
@@ -79,7 +86,7 @@
 				"Package Control: Remove Package"
 			]
 		],
-		"width": 340.0
+		"width": 400.0
 	},
 	"console":
 	{
@@ -96,6 +103,20 @@
 	},
 	"file_history":
 	[
+		"/C/Users/James Lind/AppData/Roaming/Sublime Text 2/Packages/User/Love2DnewImage.sublime-snippet",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/viewObject/main.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/viewObject/conf.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/viewObject/JLib.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/Atan2.5/play.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/Atan2.5/main.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/Atan2.5/conf.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/ShaderTest/JLib.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/ShaderTest/main.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/JLib/conf.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/JLib/main.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/JLib/buttons.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/JLib/keys.lua",
+		"/C/Users/James Lind/Downloads/Desktop/Coding Projects/Love2d Projects/JLib/JLib.lua",
 		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/conf.lua",
 		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/main.lua",
 		"/C/Users/James Lind/Downloads/Desktop/Love2d Projects/JLib/keys.lua",
@@ -131,6 +152,38 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rectangle",
+			"printf",
+			"print",
+			"point",
+			"line",
+			"drawq",
+			"draw",
+			"circle",
+			"arc",
+			"angle",
+			"alpha",
+			"button.",
+			"text",
+			"alpha",
+			"atan",
+			"atan2",
+			"10",
+			"v",
+			"thetaRad",
+			"theta",
+			"pi",
+			"triangle",
+			"arg",
+			"r",
+			"R",
+			"r",
+			"R",
+			"r",
+			"R",
+			"r",
+			"pixel",
+			"testShader",
 			"x",
 			"5",
 			"15",
@@ -162,12 +215,13 @@
 			"lowVal",
 			"scroll"
 		],
-		"highlight": true,
+		"highlight": false,
 		"in_selection": false,
 		"preserve_case": false,
 		"regex": true,
 		"replace_history":
 		[
+			"beta"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -178,51 +232,23 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "conf.lua",
-					"settings":
-					{
-						"buffer_size": 1566,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "main.lua",
 					"settings":
 					{
-						"buffer_size": 7592,
+						"buffer_size": 7642,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1621,
-								1621
+								1327,
+								1327
 							]
 						],
 						"settings":
@@ -231,7 +257,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1208.0,
+						"translation.y": 1026.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -243,19 +269,19 @@
 			"sheets":
 			[
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "JLib.lua",
 					"settings":
 					{
-						"buffer_size": 20551,
+						"buffer_size": 20925,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16351,
-								16351
+								16228,
+								16228
 							]
 						],
 						"settings":
@@ -264,17 +290,17 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1065.0,
+						"translation.y": 3647.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "keys.lua",
+					"buffer": 2,
+					"file": "buttons.lua",
 					"settings":
 					{
-						"buffer_size": 444,
+						"buffer_size": 1676,
 						"regions":
 						{
 						},
@@ -297,11 +323,11 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "buttons.lua",
+					"buffer": 3,
+					"file": "keys.lua",
 					"settings":
 					{
-						"buffer_size": 1676,
+						"buffer_size": 444,
 						"regions":
 						{
 						},
@@ -354,7 +380,7 @@
 		"cols":
 		[
 			0.0,
-			0.519690576653,
+			0.0959595959596,
 			1.0
 		],
 		"rows":
@@ -366,11 +392,11 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 53.0
+		"height": 54.0
 	},
 	"replace":
 	{
-		"height": 0.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":

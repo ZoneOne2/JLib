@@ -913,7 +913,7 @@ function drawButtons()
 
 		lg.push()
 			lg.translate(button.x,button.y)
-			lg.scale(1,-1)
+			--lg.scale(1,-1)
 
 			local textWidth = defaultFont:getWidth(button.text)
 			local textHeight = defaultFont:getHeight(button.text)
@@ -1030,9 +1030,28 @@ function nameColors()
 	black = "000000"
 	gray = "808080"
 	grey = "808080"
+	brown = "a52a2a"
 	
 	cerulean = "007ba7"
 	lime = "00ff00"
+	cyan = "00ffff"
+	magenta = "ff00ff"
+	hotPink = "ff69b4"
+
+	gold = "ffd700"
+	silver = "c0c0c0"
+	bronze = "cd7f32"
+	platinum = "e5e4e2"
+
+	honoluluBlue = "006db0"
+	lionsBlue = "006db0"
+
+	gryffindorRed = "c40001"
+	gryffindorGold = "f39f00"
+	slytherinGreen = "004101"
+	slytherinSilver = "dcdcdc"
+	hufflepuffYellow = "fff300"
+	hufflepuffBlack = "000000"
 
  end
 
@@ -1297,11 +1316,11 @@ function textInput(name,x,y)
 
 function drawText(text,x,y)
 
-	lg.push()
+	--lg.push()
 	lg.translate(x,y)
-	lg.scale(1,-1)
+	--lg.scale(1,-1)
 		lg.print(text,0,0)
-	lg.pop()
+	--lg.pop()
 
  end
 
