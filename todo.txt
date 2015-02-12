@@ -1,3 +1,6 @@
+add in any changes to JLib from physTest
+fix line intersect bug with vertical lines case
+
 button font handling (getCurrentFont()?)
 better text centering (see LD30)
 draw arrow

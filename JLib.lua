@@ -785,7 +785,8 @@ function isOnLine(refPoint,line)
 
 
 	--if not vertical line, check to see if point is on line
-	if ( (yq-y1) == (lineSlope*(xq-x1)) ) then
+	if( percentError((yq-y1),(lineSlope*(xq-x1))) < 1e-5 ) then
+	--if ( (yq-y1) == (lineSlope*(xq-x1)) ) then
 
 		--check to make sure it's in the bounds of the line
 		if ( (xq>=x1) and (xq<=x2) ) then
@@ -793,6 +794,7 @@ function isOnLine(refPoint,line)
 			return true
 
 		 else
+		 	
 
 			return false
 
@@ -808,6 +810,13 @@ function isOnLine(refPoint,line)
 
 function percentError(expected,obtained)
 
+	if (expected == 0) then
+		if(obtained == 0) then
+			return 0
+		else
+			expected = 1e-9
+		end	
+	end
 	return math.abs(((expected-obtained)/(expected))*100)
 
  end
@@ -1369,7 +1378,17 @@ function getKey(val,table)
  end
 
 
+function drawDebug()
+	local debugText = "X:"..love.mouse.getX().."\nY:"..love.mouse.getY()
+	local textWidth = defaultFont:getWidth(debugText)
+	local textHeight = defaultFont:getHeight(debugText)
 
+	setHexColor(white)
+	love.graphics.print( debugText, 0, window.height-2*textHeight )
+	--love.graphics.printf( debugText, 0, -textHeight, window.width )
+
+
+end
 
 
 --
