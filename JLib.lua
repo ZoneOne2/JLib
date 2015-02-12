@@ -233,6 +233,13 @@ function findIntersect(L1,L2,ends)
 				xInt = x1
 				yInt = (m2*xInt)+b2
 
+				if (not isInRange(yInt,y1,y2)) then
+				
+					print("m1 = infinite slope, no intersection found")
+					return false, {x=inf, y=inf}
+				
+				 end
+
 			 else
 
 				print("m1 = infinite slope, no intersection found")
@@ -247,6 +254,13 @@ function findIntersect(L1,L2,ends)
 
 				xInt = x3
 				yInt = (m1*xInt)+b1
+
+				if (not isInRange(yInt,y3,y4)) then
+				
+					print("m1 = infinite slope, no intersection found")
+					return false, {x=inf, y=inf}
+				
+				 end
 
 			 else
 
@@ -274,6 +288,13 @@ function findIntersect(L1,L2,ends)
 				xInt = x1
 				yInt = (m2*xInt)+b2
 
+				if (not isInRange(yInt,y1,y2) or yInt==y1 or yInt==y2) then
+				
+					print("m1 = infinite slope, no intersection found")
+					return false, {x=inf, y=inf}
+				
+				 end
+
 			 else
 
 				print("m1 = infinite slope, no intersection found")
@@ -288,6 +309,13 @@ function findIntersect(L1,L2,ends)
 
 				xInt = x3
 				yInt = (m1*xInt)+b1
+
+				if (not isInRange(yInt,y3,y4) or yInt==y3 or yInt==y4) then
+				
+					print("m1 = infinite slope, no intersection found")
+					return false, {x=inf, y=inf}
+				
+				 end
 
 			 else
 
@@ -1390,7 +1418,22 @@ function drawDebug()
 
 end
 
+function isInRange(val,end1,end2)
 
+	local min = math.min(end1,end2)
+	local max = math.max(end1,end2)
+
+	if (val<=max and val>=min) then
+
+		return true
+
+	else
+	
+		return false
+	
+	end
+
+end
 --
 
 
