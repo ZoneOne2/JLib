@@ -33,7 +33,7 @@ function love.load()
 	colorFind.B.center = 255
 
 	testAudio = love.audio.newSource("test.mp3")
-	
+	testImage = love.graphics.newImage("test.png")
 	
 	t = {}
 	t.polygon = {}
@@ -79,8 +79,8 @@ function love.draw()
 	
 		
 	
-		lg.scale(1,-1)
-		lg.translate(window.width/2,-window.height/2)
+		--lg.scale(1,-1)
+		--lg.translate(window.width/2,-window.height/2)
 
 		lg.translate(zoomOffsetX,zoomOffsetY)
 		lg.scale(zoomLevel)

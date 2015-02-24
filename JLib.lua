@@ -1,3 +1,10 @@
+debugJLib = false
+function printJLib(toPrint)
+	if debugJLib then
+		print(toPrint)
+	end
+ end
+
 
 function init()
 	nameColors()
@@ -198,23 +205,44 @@ function findIntersect(L1,L2,ends)
 
 	local xInt,yInt,intercept
 
+	--special case for if one of the lines is really just a point
+	--doesn't worry about endsCount
+	if ( (L1[1].x == L1[2].x) and (L1[1].y == L1[2].y) ) then
+		printJLib("Line 1 is really just a point")
+		if isOnLine(L1[1],L2) then
+			return true, {x=L1[1].x,y=L1[1].y}
+		else
+			return false, {x=inf, y=inf}
+		end
+	elseif ( (L2[1].x == L2[2].x) and (L2[1].y == L2[2].y) ) then
+		printJLib("Line 2 is really just a point")
+		if isOnLine(L2[1],L1) then
+			return true, {x=L2[1].x,y=L2[1].y}
+		else
+			return false, {x=inf, y=inf}
+		end
+	end
 
-	--speecial case if slope is the same
+
+
+
+
+	--special case if slope is the same
 	if (m1 == m2) then
 
 		if ( isOnLine({x=x1,y=y1},L2) ) then
 
-			print("same slope, intersection found (1)")
+			printJLib("same slope, intersection found (1)")
 			return true, {x=x1, y=y1}
 
 		elseif ( isOnLine({x=x2,y=y2},L2) ) then
 
-			print("same slope, intersection found (2)")
+			printJLib("same slope, intersection found (2)")
 			return true, {x=x2,y=y2}
 
 		else
 
-			print("same slope, no intersection found")
+			printJLib("same slope, no intersection found")
 			return false, {x=inf, y=inf}
 
 		 end
@@ -235,14 +263,14 @@ function findIntersect(L1,L2,ends)
 
 				if (not isInRange(yInt,y1,y2)) then
 				
-					print("m1 = infinite slope, no intersection found")
+					printJLib("m1 = infinite slope, no intersection found")
 					return false, {x=inf, y=inf}
 				
 				 end
 
 			 else
 
-				print("m1 = infinite slope, no intersection found")
+				printJLib("m1 = infinite slope, no intersection found")
 				return false, {x=inf, y=inf}
 
 			 end
@@ -257,14 +285,14 @@ function findIntersect(L1,L2,ends)
 
 				if (not isInRange(yInt,y3,y4)) then
 				
-					print("m1 = infinite slope, no intersection found")
+					printJLib("m1 = infinite slope, no intersection found")
 					return false, {x=inf, y=inf}
 				
 				 end
 
 			 else
 
-				print("m2 = infinite slope, no intersection found")
+				printJLib("m2 = infinite slope, no intersection found")
 				return false, {x=inf, y=inf}
 
 			 end
@@ -290,14 +318,14 @@ function findIntersect(L1,L2,ends)
 
 				if (not isInRange(yInt,y1,y2) or yInt==y1 or yInt==y2) then
 				
-					print("m1 = infinite slope, no intersection found")
+					printJLib("m1 = infinite slope, no intersection found")
 					return false, {x=inf, y=inf}
 				
 				 end
 
 			 else
 
-				print("m1 = infinite slope, no intersection found")
+				printJLib("m1 = infinite slope, no intersection found")
 				return false, {x=inf, y=inf}
 
 			 end
@@ -312,14 +340,14 @@ function findIntersect(L1,L2,ends)
 
 				if (not isInRange(yInt,y3,y4) or yInt==y3 or yInt==y4) then
 				
-					print("m1 = infinite slope, no intersection found")
+					printJLib("m1 = infinite slope, no intersection found")
 					return false, {x=inf, y=inf}
 				
 				 end
 
 			 else
 
-				print("m2 = infinite slope, no intersection found")
+				printJLib("m2 = infinite slope, no intersection found")
 				return false, {x=inf, y=inf}
 
 			 end
@@ -375,7 +403,7 @@ function findIntersect(L1,L2,ends)
 
 
 		if ( (xInt > x1) and (xInt < x2) and (xInt > x3) and (xInt < x4) ) then
-		--	print((xInt>x1),"xint",xInt,"x1,x2",x1,x2,"x3,x4",x3,x4)
+		--	printJLib((xInt>x1),"xint",xInt,"x1,x2",x1,x2,"x3,x4",x3,x4)
 			return true, intercept
 
 		else
@@ -422,7 +450,7 @@ function findSlope(point1,point2)
 	--check if line is vertical
 	elseif (p1.x == p2.x) then
 	
-		print("vertical line found")
+		printJLib("vertical line found")
 		return "inf"
 	
 	 else
@@ -1407,12 +1435,12 @@ function getKey(val,table)
 
 
 function drawDebug()
-	local debugText = "X:"..love.mouse.getX().."\nY:"..love.mouse.getY()
+	local debugText = "FPS:"..fps.."\nX:"..love.mouse.getX().."\nY:"..love.mouse.getY()
 	local textWidth = defaultFont:getWidth(debugText)
 	local textHeight = defaultFont:getHeight(debugText)
 
 	setHexColor(white)
-	love.graphics.print( debugText, 0, window.height-2*textHeight )
+	love.graphics.print( debugText, 0, window.height-3*textHeight )
 	--love.graphics.printf( debugText, 0, -textHeight, window.width )
 
 
