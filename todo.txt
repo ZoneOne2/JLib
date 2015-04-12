@@ -1,4 +1,4 @@
-replace JLib with JLib from physTest (includes new dubug printing)
+
 
 button font handling (getCurrentFont()?)
 better text centering (see LD30)

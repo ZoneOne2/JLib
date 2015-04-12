@@ -85,108 +85,14 @@ function love.draw()
 		lg.translate(zoomOffsetX,zoomOffsetY)
 		lg.scale(zoomLevel)
 		
-		drawGrid(50)
-
-		
-		
-		lg.setLineWidth(1)
-
-		lg.setColor(255,0,0)
-		lg.circle("fill",0,0,10)
-		
-		lg.setColor(0,255,0)
-		lg.circle("fill",100,0,10)
-		
-		lg.setColor(0,0,255)
-		lg.circle("fill",100,100,10)
-
-		setHexColor(purple)
-		--lg.setColor(255,0,255)
-		lg.circle("fill",0,100,10)
-		
-	
-		lg.setColor(0,255,0)
-		pointLine(t1,t2)
-		pointLine(t2,t3)
-		
-		lg.setColor(255,0,0)
-		--pointPolygon("line",t1,t2,t3)
-		
-		for i, typeOfPoint in pairs(t) do
-		
-			setColorFind(i)
-			for j, point in pairs(typeOfPoint) do
-			
-				lg.circle("fill",point.x,point.y,1)
-				
-			 end
-			
-		 end
-		
-		if (#t.polygon>2) then
-			pointPolygon("line",t.polygon)
-			print(findAreaTriangle(t.polygon[1],t.polygon[2],t.polygon[3]))
-		 end
-		
-		if (#t.angle==2) then
-			pointLine(t.angle)
-		 end
-
-		--if (#t.polygon == 2 and #t.center == 2) then
-
-			pointLine(testLine1)
-			pointLine(testLine2)
-
-			--if (intTest) then
-				setHexColor(red)
-				lg.circle("fill",intPoint.x,intPoint.y,3)
-			--end
-
-		--end
-
-		
-		
-		lg.circle("fill",0,0,5)
-		
-		setHexColor(white)
-		pointPolygon("fill",wall[1])
-		--[[
-		lg.push()
-		lg.translate(player.x,player.y)
-
-		setHexColor(white)
-		
 		setHexColor(cerulean)
-		lg.rectangle("fill",-10,-10,player.width,player.height)
-		for i, point in pairs(player.bounds) do
-			setHexColor(red)
-			lg.circle("fill",point.x,point.y,1)
-		end
-		lg.pop()
+		love.graphics.circle( "fill", window.width/2, window.height/2, 2 )
+		love.graphics.circle( "fill", mouse.x, mouse.y, 2 )
 
-		for i, axis in pairs(axes[1]) do
-			setHexColor(cerulean)
-			drawText(i.."\t"..axis,-300,200-15*i)
-		
-		 end
-		]]
-
-		--drawButtons()
-	
-		if (hasTextInput) then
-
-			local textWidth = defaultFont:getWidth(userInput[activeText])
-			local textHeight = defaultFont:getHeight(userInput[activeText])
-
-			setHexColor(white)
-			lg.rectangle("fill",textX-1,textY+1,textWidth+2,-textHeight-2)
-			setHexColor(black)
-			lg.rectangle("line",textX-1,textY+1,textWidth+2,-textHeight-2)
-
-			setHexColor(cerulean)
-			drawText(userInput[activeText],textX,textY)
-
-		 end
+		setHexColor(red)
+		pointLine(testVector)
+		setHexColor(lime)
+		pointLine(bisec)
 	
 	 lg.pop()
 
@@ -195,91 +101,10 @@ function love.draw()
 function love.update(dt)
 	jupdate(dt)
 
-
-	
-	--[[
-	player.vx = (player.speed*axes[1][1])
-
-	player.onGround = false
-	
-	player.x = player.x + (player.vx*dt)
-	player.y = player.y + (player.vy*dt)
-
-	player.vx = player.vx + (player.ax*dt)
-	player.vy = player.vy + (player.ay*dt)
-
-
-	for i, point in pairs(player.bounds) do
-
-		if ( isInside({x=point.x+player.x,y=point.y+player.y},wall[1]) ) then
-
-			player.ay = 0
-			player.vy = 0
-			player.y = wall[1][1].y+10
-			player.onGround = true
-
-		 end
-
-	 end
-
-	if not player.onGround then
-
-		player.ay = -player.gravity
-
-	end
-
-
-	]]
-
-
-
-
-
-
-	allPoints = mergeTables(t.polygon,t.angle,t.center)
-
-	t1 = {}
-	t1[1] = {x=mx,y=my}
-	t2 = {}
-	t2[1] = {x=97,y=5}
-	t3 = {}
-	t3[1] = {x=26,y=31}
-	
-	
-	if (#t.angle==2) then
-		lineTest = {
-					{x=t.angle[1].x,y=t.angle[1].y},
-					{x=t.angle[2].x,y=t.angle[2].y}
-					}
-		print(fps,pointTypes[activePointType],mx,my,isOnLine(t1[1],lineTest))
-	 else
-		print(fps,pointTypes[activePointType],mx,my,distToLine(t1[1],{t2[1],t3[1]}))
-	 end
-
-	testTable = {1,9,8,4,key1 = -100, key2 = (100*math.pi),0,2,4,-98.5}
-
-	--print(tableMin(testTable))
-
-	dist({x=0,y=0},mouse)
-
-
-
-
-	--if (#t.polygon == 2 and #t.center == 2) then
-		testLine1 = {{x=228,y=131},{x=-27,y=100}}
-		testLine2 = {{x=-27,y=230},{x=202,y=-145}}
-		intTest, intPoint = findIntersect(testLine1,testLine2,false)
-		--print(fps,pointTypes[activePointType],mx,my,mode,isInside(t1[1],wall[1]))
-	
-	-- else
-
-		--print(fps,pointTypes[activePointType],mx,my)
-
-	-- end
-
-	testTablezzz = {2,4,key1 = "test",5}
-
-	print(fps,player.onGround)
+	testVector = {{x=window.width/2,y=window.height/2},mouse}
+	pVec = findPerpendicular(testVector,-50)
+	bisec = perpendicularBisector(testVector,100)
+	print(dist(bisec[1],bisec[2]))
 
 
  end

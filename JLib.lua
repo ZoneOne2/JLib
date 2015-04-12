@@ -125,8 +125,8 @@ function jupdate(dt)
 
 function updateCursor()
 
-	mxw = love.mouse.getX()-(window.width/2)
-	myw = -love.mouse.getY()+(window.height/2)
+	mxw = love.mouse.getX()
+	myw = love.mouse.getY()
 
 	mx = (mxw-zoomOffsetX)/zoomLevel
 	my = (myw-zoomOffsetY)/zoomLevel
@@ -134,6 +134,38 @@ function updateCursor()
 	mouse = {x=mx, y=my}
 
  end
+
+function findPerpendicular(vector,length)
+	
+	length = length or 1
+
+	local ux = vector[1].x
+	local uy = vector[1].y
+
+	local vx = vector[2].x
+	local vy = vector[2].y
+
+	local vMag = math.sqrt((vx-ux)^2+(vy-uy)^2)
+	local unitX = (vx-ux)/vMag
+	local unitY = (vy-uy)/vMag
+
+	local px = unitY
+	local py = -unitX
+
+	return {{x=ux,y=uy},{x=ux+length*px,y=uy+length*py}}
+
+ end
+
+function perpendicularBisector(vector,length)
+	length = length or 1
+	
+	local side1 = findPerpendicular(vector,-length/2)
+	local side2 = findPerpendicular(vector,length/2)
+
+	return {{x=side1[2].x,y=side1[2].y},{x=side2[2].x,y=side2[2].y}}
+
+ end
+
 
 function findIntersect(L1,L2,ends)	
 
